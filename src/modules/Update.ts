@@ -80,7 +80,7 @@ async function update(localVersion: string): Promise<void> {
             // if instagram post had a update, notify in console and in a modal
             if (isSemVer(onlineVersion, `> ${localVersion}`)) {
                 new Modal({
-                    heading: [`<h5>[instantgram] <span style="float:right">v${localVersion}</span></h5>`],
+                    heading: [`<h5>[instantgram-light] <span style="float:right">v${localVersion}</span></h5>`],
                     body: [
                         `<div style='display: block;border: 2px solid rgb(0 0 0 / 70%);border-left: none;border-right: none;border-top: none;padding: 5px;font-variant: small-caps;font-weight: 900;font-size: 16px;'>Es ist ein neues Update verfügbar <span style='float:right'>v${onlineVersion}</span></div>, "<br/>", "<br/>", <div style='text-align:left'><h2 style='font-weight: bold;'>Changelog</h2>${changelog.split('Changelog ')[1]}</div>, "<br/>", <a href='http://thinkbig-company.github.io/instantgram' target='_blank' onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='initial'" style='text-decoration: initial; margin: 0px auto; padding: 5px; color: black; border-style: solid; border-image-slice: 1; border-width: 3px; border-image-source: linear-gradient(to left, rgb(213, 58, 157), rgb(116, 58, 213));'>${localize('modules.update@determineIfGetUpdateIsNecessary_@load_update')}</a>`,
                     ],

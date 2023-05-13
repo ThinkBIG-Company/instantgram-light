@@ -72,7 +72,7 @@ export class StoryScanner implements Module {
 
       callback(found, mediaType, mediaUrl, program)
     } catch (e) {
-      console.error(this.getName() + "()", `[instantgram] ${program.VERSION}`, e)
+      console.error(this.getName() + "()", `[instantgram-light] ${program.VERSION}`, e)
       callback(false, null, program)
     }
     /* =====  End of StoryScanner ======*/

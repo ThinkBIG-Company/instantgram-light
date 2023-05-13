@@ -57,7 +57,7 @@ if (program.hostname == 'instagram.com' || program.hostname == 'www.instagram.co
 
                 new Modal({
                     heading: [
-                        `<h5>[instantgram] ProfilePage downloader <span style="float:right">v${program.VERSION}</span></h5>`
+                        `<h5>[instantgram-light] ProfilePage downloader <span style="float:right">v${program.VERSION}</span></h5>`
                     ],
                     body: [
                         localize('index@profilepage_downloader_disabled')
@@ -78,7 +78,7 @@ if (program.hostname == 'instagram.com' || program.hostname == 'www.instagram.co
                 if (foundMediaType == MediaType.UNDEFINED) {
                     new Modal({
                         heading: [
-                            `<h5>[instantgram] <span style="float:right">v${program.VERSION}</span></h5>`
+                            `<h5>[instantgram-light] <span style="float:right">v${program.VERSION}</span></h5>`
                         ],
                         body: [
                             localize('index#program@alert_dontFound')
@@ -101,7 +101,7 @@ if (program.hostname == 'instagram.com' || program.hostname == 'www.instagram.co
 } else {
     new Modal({
         heading: [
-            `<h5>[instantgram] <span style="float:right">v${program.VERSION}</span></h5>`
+            `<h5>[instantgram-light] <span style="float:right">v${program.VERSION}</span></h5>`
         ],
         body: [
             localize('index@alert_onlyWorks')

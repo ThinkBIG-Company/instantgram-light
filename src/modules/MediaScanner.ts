@@ -78,7 +78,7 @@ export class MediaScanner implements Module {
 
       callback(found, mediaObj.mediaType, mediaObj.mediaURL, program)
     } catch (e) {
-      console.error(this.getName() + "()", `[instantgram] ${program.VERSION}`, e)
+      console.error(this.getName() + "()", `[instantgram-light] ${program.VERSION}`, e)
       callback(false, null, program)
     }
     /* =====  End of MediaScanner ======*/
