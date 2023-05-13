@@ -1,5 +1,5 @@
 # <img style="float: left; vertical-align: bottom; " width="35" src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg"> [instantgram] v2023.05.13 :love_you_gesture: Light version
-![GitHub release](https://img.shields.io/badge/release-v2023.04.12-green)
+![GitHub release](https://img.shields.io/badge/release-v2023.05.13-green)
 
 ![badge](https://img.shields.io/badge/for-instagram-yellow.svg?style=flat-square)
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com/)
