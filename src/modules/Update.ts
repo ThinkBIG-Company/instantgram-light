@@ -71,7 +71,7 @@ async function update(localVersion: string): Promise<void> {
             if (sentence.trim() !== '') {
                 ul += `<li>${sentence.trim()}</li>`
             }
-        });
+        })
         ul += '</ul>'
 
         const onlineVersion = changelogNewReleaseDate
