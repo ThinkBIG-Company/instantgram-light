@@ -3,7 +3,7 @@ import { Module } from "./Module"
 import { MediaType } from "../model/mediaType"
 import { FeedScanner } from "./FeedScanner"
 import { PostReelScanner } from "./PostReelScanner"
-import { StoryScanner } from "./StoryScanner"
+import { StoriesScanner } from "./StoriesScanner"
 
 export class MediaScanner implements Module {
   public getName(): string {
@@ -19,7 +19,6 @@ export class MediaScanner implements Module {
      ==================================== */
     try {
       // Define default variables
-
       let mediaObj = {
         mediaType: MediaType.UNDEFINED,
         mediaEl: undefined,
@@ -39,13 +38,13 @@ export class MediaScanner implements Module {
 
       // Detect story video/image
       if (program.regexStoriesURI.test(program.path)) {
-        new StoryScanner().execute(program, function (_scannerFound: boolean, foundMediaType: MediaType, foundMediaUrl: string, _scannerProgram: Program) {
+        new StoriesScanner().execute(program, function (_scannerFound: boolean, foundMediaType: MediaType, foundMediaUrl: string, _scannerProgram: Program) {
           mediaObj.mediaType = foundMediaType
           mediaObj.mediaURL = foundMediaUrl
 
           if (_scannerFound) {
             found = true
-            program.foundByModule = new StoryScanner().getName()
+            program.foundByModule = new StoriesScanner().getName()
           }
         })
       }
