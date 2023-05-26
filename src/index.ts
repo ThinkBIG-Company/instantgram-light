@@ -23,6 +23,7 @@ const program: Program = {
     regexProfilePath: /^\/([A-Za-z0-9._]{2,3})+\/$/,
     regexPostPath: /^\/p\//,
     regexReelURI: /reel\/(.*)+/,
+    regexReelsURI: /reels\/(.*)+/,
     regexStoriesURI: /stories\/(.*)+/,
 
     foundByModule: null

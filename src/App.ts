@@ -13,6 +13,7 @@ export type Program = {
   regexProfilePath: RegExp
   regexPostPath: RegExp
   regexReelURI: RegExp
+  regexReelsURI: RegExp
   regexStoriesURI: RegExp
 
   foundByModule: string | null | undefined

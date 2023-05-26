@@ -3,6 +3,7 @@ import { Module } from "./Module"
 import { MediaType } from "../model/mediaType"
 import { FeedScanner } from "./FeedScanner"
 import { PostReelScanner } from "./PostReelScanner"
+import { ReelsScanner } from "./ReelsScanner"
 import { StoriesScanner } from "./StoriesScanner"
 
 export class MediaScanner implements Module {
@@ -58,6 +59,18 @@ export class MediaScanner implements Module {
             if (_scannerFound) {
               found = true
               program.foundByModule = new FeedScanner().getName()
+            }
+          })
+        }
+
+        if (program.regexReelsURI.test(program.path)) {
+          new ReelsScanner().execute(program, function (_scannerFound: boolean, foundMediaType: MediaType, foundMediaUrl: string, _scannerProgram: Program) {
+            mediaObj.mediaType = foundMediaType
+            mediaObj.mediaURL = foundMediaUrl
+
+            if (_scannerFound) {
+              found = true
+              program.foundByModule = new ReelsScanner().getName()
             }
           })
         }
