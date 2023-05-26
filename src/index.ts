@@ -1,14 +1,12 @@
 import { Program } from './App'
 import { MediaType } from './model/mediaType'
 import { MediaScanner } from './modules/MediaScanner'
-import Update from './modules/Update'
 import { Modal } from './components/Modal'
 import localize from './helpers/localize'
 import { detect } from "detect-browser"
+import update from './modules/Update'
 // Init browser detection
 const browser = detect()
-
-console.clear()
 
 const program: Program = {
     VERSION: process.env.VERSION as string,
@@ -99,7 +97,7 @@ if (program.hostname == 'instagram.com' || program.hostname == 'www.instagram.co
 
     // Check everytime for an update on calling this
     if (!process.env.DEV) {
-        Update(program.VERSION)
+        update(program.VERSION)
     }
 } else {
     new Modal({
