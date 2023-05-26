@@ -37,7 +37,8 @@ This is a lite version which supports browsers like firefox with 65kb bookmarkle
 Read [CONTRIBUTING.md](CONTRIBUTING.md) for more information. :heart:
 
 ## Changelog
-- v2023.06.01 - [instangram] Light edition without modal etc. to keep the 65kb bookmarklet size limit.
+- v2023.06.01 - [instangram-light] Fix the problem that videos sometimes do not load. Fix single story are not covered for media downloading.
+- v2023.05.13 - [instangram-light] Light edition without modal etc. to keep the 65kb bookmarklet size limit.
 
 
 [1]:http://thinkbig-company.github.io/instantgram-light/
