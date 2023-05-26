@@ -1,7 +1,6 @@
 import { Program } from "../App"
 import { Module } from "./Module"
 import { MediaType } from "../model/mediaType"
-import localize from "../helpers/localize"
 
 export class StoriesScanner implements Module {
   public getName(): string {

@@ -70,7 +70,9 @@ if (program.hostname == 'instagram.com' || program.hostname == 'www.instagram.co
                 }).open()
             }
         } else {
-            window.open(foundMediaUrl, '_blank')
+            // Fix stuttering videos
+            const updatedUrl = foundMediaUrl.replace(/\/\/[^/]+\.cdninstagram\.com/, "//scontent.cdninstagram.com")
+            window.open(updatedUrl, '_blank')
         }
 
         if (program.foundByModule == undefined) {
