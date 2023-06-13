@@ -22,7 +22,7 @@ This is a lite version which supports browsers like firefox with 65kb bookmarkle
 | Google Chrome        | :white_check_mark: |
 | Mozilla Firefox     | :white_check_mark: |
 | Edge on chromium >=80 | :white_check_mark: |
-| Edge*                | :warning:          |
+| Edge Legacy*                | :warning:          |
 | Internet Explorer 11 | :x: |
 *_ apparently Edge doesn't allow you to drag a button to the bookmark bar
 
