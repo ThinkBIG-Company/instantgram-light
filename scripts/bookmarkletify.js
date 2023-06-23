@@ -30,5 +30,5 @@ function hash() {
 }
 
 function button(bookmarklet) {
-  return '<a href="' + bookmarklet + '" class="btn" style="cursor: move;">[instantgram-light' + hash() + ']</a>';
+  return '<a href="' + bookmarklet + '" class="btn" style="cursor: move;">[instantgram' + hash() + ']</a>';
 }

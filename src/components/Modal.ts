@@ -62,7 +62,7 @@ export class Modal {
 }
 .instantgram-modal-header h5 {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 .header-text-left {
@@ -73,31 +73,6 @@ export class Modal {
 }
 .header-text-middle {
   margin: 0;
-}
-.header-text-right:last-child {
-  margin-right: 30px;
-}
-.instantgram-light-settings {
-  cursor: pointer;
-  display: inline-block;
-  color: rgba(255, 255, 255, 0.7);
-  background-color: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
-  border-style: solid;
-  border-width: 1px;
-  border-radius: 0.3rem;
-  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
-  width: 40px;
-  height: 40px;
-  top: 16px;
-  right: 16px;
-  position: absolute;
-}
-.instantgram-light-settings:hover {
-  color: rgba(255, 255, 255, 0.8);
-  text-decoration: none;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.3);
 }`
       document.head.appendChild(style)
     }
@@ -223,11 +198,6 @@ export class Modal {
     setTimeout(() => {
       this.modal!.classList.add('instantgram-modal-show')
     })
-
-    // Re-trigger the callback function if it exists
-    if (this?.callback) {
-      this.callback(this, this.modal!)
-    }
   }
 
   public async close(): Promise<void> {
