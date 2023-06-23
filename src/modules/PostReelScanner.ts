@@ -9,33 +9,6 @@ export class PostReelScanner implements Module {
     return "PostReelScanner"
   }
 
-  public getPostId(): string {
-    const url = window.location.href
-    let regex = /\/p\/([a-zA-Z0-9_-]+)/
-    let postId = url.match(regex)?.[1]
-
-    // Fallback, is it a reel?
-    if (typeof postId === 'undefined') {
-      regex = /\/reel\/([a-zA-Z0-9_-]+)/
-      postId = url.match(regex)?.[1]
-    }
-
-    return postId
-  }
-
-  public getUserName($reactPostNode: { return: { return: { return: { memoizedProps: { post: any } } } } }): string {
-    const post = $reactPostNode?.return?.return?.return?.memoizedProps.post
-
-    return post?.owner?.username ?? false
-  }
-
-  public unixTimestampToDate(unixTimestamp: number): string {
-    const date = new Date(unixTimestamp * 1000)
-    const isoDate = date.toISOString().slice(0, 10)
-    const time = date.toISOString().slice(11, 16).replace(':', '-')
-    return `${isoDate}--${time}`
-  }
-
   /** @suppress {uselessCode} */
   public async execute(program: Program, callback?: any): Promise<any> {
     let found = false
@@ -47,19 +20,15 @@ export class PostReelScanner implements Module {
       // Define default variables
       let mediaEl = null
       let mediaType: MediaType = MediaType.UNDEFINED
-
+      let mediaUrl: string
+      let mediaInfo: any
       // All grabed feed posts
       let $articles: Element | HTMLCollectionOf<HTMLElement>
 
       // Article
       let $article: any
 
-      let mediaUrl: string
-
       // Scanner begins
-      // The order is very important
-      const postId = this.getPostId()
-
       if (mediaEl == null) {
         $articles = document.getElementsByTagName("article")
 
@@ -81,16 +50,10 @@ export class PostReelScanner implements Module {
         const $reactInstanceKey = Object.keys($reactPostEl).find(key => key.includes('Instance') || key.includes('Fiber'))
         const $reactPostNode = $reactPostEl[$reactInstanceKey]
 
-        const userName = this.getUserName($reactPostNode)
-
-        // Check requirements are met
-        if (postId == null || userName == null) {
-          return
-        }
-        // END
-
         // DON'T MESS WITH ME INSTA!
         if ($reactPostNode?.return?.return?.return?.memoizedProps?.post?.isSidecar || ($reactPostNode?.return?.return?.return?.memoizedProps?.post?.sidecarChildren && $reactPostNode?.return?.return?.return?.memoizedProps?.post?.sidecarChildren.length > 0)) {
+          mediaInfo = $reactPostNode?.return?.return?.return?.memoizedProps?.post
+
           found = true
           mediaType = MediaType.Carousel
 
@@ -111,23 +74,23 @@ export class PostReelScanner implements Module {
           }
         } else {
           // Single image/video
-          const media = $reactPostNode?.return?.return?.return?.memoizedProps?.post
+          mediaInfo = $reactPostNode?.return?.return?.return?.memoizedProps?.post
 
-          if (typeof media.dashInfo.video_dash_manifest !== 'undefined' && media.dashInfo.video_dash_manifest !== null) {
+          if (typeof mediaInfo.dashInfo.video_dash_manifest !== 'undefined' && mediaInfo.dashInfo.video_dash_manifest !== null) {
             found = true
             mediaType = MediaType.Video
 
-            mediaUrl = media.videoUrl
+            mediaUrl = mediaInfo.videoUrl
           } else {
             found = true
             mediaType = MediaType.Image
 
-            mediaUrl = media.src
+            mediaUrl = mediaInfo.src
           }
         }
       }
 
-      callback(found, mediaType, mediaUrl, program)
+      callback(found, mediaType, mediaUrl, mediaInfo, program)
     } catch (e) {
       console.error(this.getName() + "()", `[instantgram-light] ${program.VERSION}`, e)
       callback(false, null, program)

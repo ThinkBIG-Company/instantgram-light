@@ -10,7 +10,7 @@ export class StoriesScanner implements Module {
   public getUserName(element: Document): string | undefined {
     let userName: string | undefined
 
-    const userNameContainer = element.querySelectorAll('header a')[1]
+    const userNameContainer = element.querySelectorAll("header a")[1]
     if (userNameContainer) {
       userName = userNameContainer.textContent
     }
@@ -18,20 +18,13 @@ export class StoriesScanner implements Module {
     return userName
   }
 
-  public unixTimestampToDate(unixTimestamp: number): string {
-    const date = new Date(unixTimestamp * 1000)
-    const isoDate = date.toISOString().slice(0, 10)
-    const time = date.toISOString().slice(11, 16).replace(':', '-')
-    return `${isoDate}--${time}`
-  }
-
   public pauseCurrentStory() {
     // Select the button element with SVG viewBox="0 0 48 48"
-    let button = document.querySelector('button._abl- svg[viewBox="0 0 48 48"]')
+    let button = document.querySelector("button._abl- svg[viewBox='0 0 48 48']")
 
     // Trigger a click event on the button if it exists
     if (button) {
-      button.closest('button').click()
+      button.closest("button").click()
     }
   }
 
@@ -45,8 +38,8 @@ export class StoriesScanner implements Module {
     try {
       // Define default variables
       let mediaType: MediaType = MediaType.UNDEFINED
-
       let mediaUrl: string
+      let mediaInfo: any
 
       // Container
       let $container = document.querySelector("body > div:nth-child(2)")
@@ -70,20 +63,22 @@ export class StoriesScanner implements Module {
           for (let i = 0; i < (<any>stories).length; i++) {
             let transformStyle = (<any>stories[i]).style.transform
 
-            if (<any>stories[i].childElementCount > 0 && transformStyle.includes('scale(1)')) {
+            if (<any>stories[i].childElementCount > 0 && transformStyle.includes("scale(1)")) {
               // Pause any playing videos before show modal
               this.pauseCurrentStory()
 
-              const $reactPostEl = [...Array.from(stories[i].querySelectorAll('*'))].filter((element) => {
-                const instanceKey = Object.keys(element).find((key) => key.includes('Instance') || key.includes('Fiber'))
+              const $reactPostEl = [...Array.from(stories[i].querySelectorAll("*"))].filter((element) => {
+                const instanceKey = Object.keys(element).find((key) => key.includes("Instance") || key.includes("Fiber"))
                 const $react = element[instanceKey]
                 return $react?.return?.return?.return?.memoizedProps.post ?? false
               })[0]
-              const $reactInstanceKey = Object.keys($reactPostEl).find(key => key.includes('Instance') || key.includes('Fiber'))
+              const $reactInstanceKey = Object.keys($reactPostEl).find(key => key.includes("Instance") || key.includes("Fiber"))
               const $reactPostNode = $reactPostEl[$reactInstanceKey]
 
               // DON'T MESS WITH ME INSTA!
               if ($reactPostNode?.return?.return?.return?.memoizedProps?.post?.isSidecar || ($reactPostNode?.return?.return?.return?.memoizedProps?.post?.sidecarChildren && $reactPostNode?.return?.return?.return?.memoizedProps?.post?.sidecarChildren.length > 0)) {
+                mediaInfo = $reactPostNode?.return?.return?.return?.memoizedProps?.post
+
                 found = true
                 mediaType = MediaType.Carousel
 
@@ -91,7 +86,7 @@ export class StoriesScanner implements Module {
                   const node = $reactPostNode?.return?.return?.return?.memoizedProps?.post
                   const scMedia = $reactPostNode?.return?.return?.return?.memoizedProps?.post?.sidecarChildren[sC]
 
-                  if (typeof scMedia.dashInfo.video_dash_manifest !== 'undefined' && scMedia.dashInfo.video_dash_manifest !== null) {
+                  if (typeof scMedia.dashInfo.video_dash_manifest !== "undefined" && scMedia.dashInfo.video_dash_manifest !== null) {
                     found = true
                     mediaType = MediaType.Video
 
@@ -105,9 +100,9 @@ export class StoriesScanner implements Module {
                 }
               } else {
                 // Single image/video
-                const media = $reactPostNode?.return?.return?.return?.memoizedProps?.post
+                mediaInfo = $reactPostNode?.return?.return?.return?.memoizedProps?.post
 
-                if (typeof media.dashInfo.video_dash_manifest !== 'undefined' && media.dashInfo.video_dash_manifest !== null) {
+                if (typeof mediaInfo.dashInfo.video_dash_manifest !== "undefined" && mediaInfo.dashInfo.video_dash_manifest !== null) {
                   found = true
                   mediaType = MediaType.Video
 
@@ -128,12 +123,12 @@ export class StoriesScanner implements Module {
           // Pause any playing videos before show modal
           this.pauseCurrentStory()
 
-          const $reactPostEl = [...Array.from(story.querySelectorAll('*'))].filter((element) => {
-            const instanceKey = Object.keys(element).find((key) => key.includes('Instance') || key.includes('Fiber'))
+          const $reactPostEl = [...Array.from(story.querySelectorAll("*"))].filter((element) => {
+            const instanceKey = Object.keys(element).find((key) => key.includes("Instance") || key.includes("Fiber"))
             const $react = element[instanceKey]
             return $react?.return?.return?.return?.memoizedProps.post ?? false
           })[0]
-          const $reactInstanceKey = Object.keys($reactPostEl).find(key => key.includes('Instance') || key.includes('Fiber'))
+          const $reactInstanceKey = Object.keys($reactPostEl).find(key => key.includes("Instance") || key.includes("Fiber"))
           const $reactPostNode = $reactPostEl[$reactInstanceKey]
 
           if ($reactPostNode?.return?.return?.return?.memoizedProps?.post?.isSidecar || ($reactPostNode?.return?.return?.return?.memoizedProps?.post?.sidecarChildren && $reactPostNode?.return?.return?.return?.memoizedProps?.post?.sidecarChildren.length > 0)) {
@@ -144,7 +139,7 @@ export class StoriesScanner implements Module {
               const node = $reactPostNode?.return?.return?.return?.memoizedProps?.post
               const scMedia = $reactPostNode?.return?.return?.return?.memoizedProps?.post?.sidecarChildren[sC]
 
-              if (typeof scMedia.dashInfo.video_dash_manifest !== 'undefined' && scMedia.dashInfo.video_dash_manifest !== null) {
+              if (typeof scMedia.dashInfo.video_dash_manifest !== "undefined" && scMedia.dashInfo.video_dash_manifest !== null) {
                 found = true
                 mediaType = MediaType.Video
 
@@ -160,7 +155,7 @@ export class StoriesScanner implements Module {
             // Single image/video
             const media = $reactPostNode?.return?.return?.return?.memoizedProps?.post
 
-            if (typeof media.dashInfo.video_dash_manifest !== 'undefined' && media.dashInfo.video_dash_manifest !== null) {
+            if (typeof media.dashInfo.video_dash_manifest !== "undefined" && media.dashInfo.video_dash_manifest !== null) {
               found = true
               mediaType = MediaType.Video
 
@@ -174,13 +169,13 @@ export class StoriesScanner implements Module {
           }
         }
       } else {
-        console.log("Could not find container element");
+        console.log("Could not find container element")
       }
 
-      callback(found, mediaType, mediaUrl, program)
+      callback(found, mediaType, mediaUrl, mediaInfo, program)
     } catch (e) {
       console.error(this.getName() + "()", `[instantgram-light] ${program.VERSION}`, e)
-      callback(false, null, program)
+      callback(false, null, null, null, program)
     }
     /* =====  End of StoriesScanner ======*/
   }

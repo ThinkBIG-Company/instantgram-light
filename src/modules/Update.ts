@@ -1,13 +1,6 @@
 import localize from "../helpers/localize"
 import { Modal } from "../components/Modal"
 
-interface InstantgramData {
-    version: string
-    onlineVersion: string
-    lastVerification: number
-    dateExpiration: number
-}
-
 function informOutdatedVersionInDevConsole(data: InstantgramData): void {
     console.warn(localize('modules.update@consoleWarnOutdatedInfo'))
     console.warn(
@@ -55,7 +48,7 @@ function determineIfGetUpdateIsNecessary(localVersion: string): boolean {
 async function update(localVersion: string): Promise<void> {
     if (determineIfGetUpdateIsNecessary(localVersion)) {
         const response = await fetch(
-            'https://www.instagram.com/graphql/query/?query_hash=003056d32c2554def87228bc3fd9668a&variables={%22id%22:45423705413,%22first%22:100}'
+            'https://www.instagram.com/graphql/query/?query_hash=003056d32c2554def87228bc3fd9668a&variables={%22id%22:45039295328,%22first%22:100}'
         )
         const data = await response.json()
         const changelog = data.data.user.edge_owner_to_timeline_media.edges[0].node.edge_media_to_caption.edges[0].node.text
@@ -97,7 +90,13 @@ async function update(localVersion: string): Promise<void> {
         const installedVersion = new Date(localVersion)
         if (_onlineVersion > installedVersion) {
             new Modal({
-                heading: [`<h5>[instantgram-light] <span style="float:right">v${localVersion}</span></h5>`],
+                heading: [
+                    `<h5>
+                        <span class="header-text-left">[instantgram-light]</span>
+                        <span class="header-text-right" style="margin-right: 0">v${localVersion}</span>
+                    </h5>
+                    `
+                ],
                 body: [
                     `<div style='display: block;border: 2px solid rgb(0 0 0 / 70%);border-left: none;border-right: none;border-top: none;padding: 5px;font-variant: small-caps;font-weight: 900;font-size: 16px;'>Es ist ein neues Update verfügbar <span style='float:right'>v${onlineVersion}</span></div><div style='text-align:left'><h2 style='font-weight: bold;'><br>Changelog</h2>${ul}</div><a href='http://thinkbig-company.github.io/instantgram-light' target='_blank' onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='initial'" style='display: block; text-align: center;text-decoration: initial; margin: 0px auto; padding: 10px; color: black; border-style: solid; border-image-slice: 1; border-width: 3px; border-image-source: linear-gradient(to left, rgb(213, 58, 157), rgb(116, 58, 213));'>${localize('modules.update@determineIfGetUpdateIsNecessary_@load_update')}</a>`,
                 ],

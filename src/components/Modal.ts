@@ -44,13 +44,25 @@ export class Modal {
     if (element == null) {
       var style = document.createElement('style')
       style.id = 'instantgram-modal'
-      style.innerHTML = `.instantgram-modal-overlay{display:none!important;opacity:0!important;transition:all ease .1s!important;position:fixed!important;top:0!important;left:0!important;right:0!important;bottom:0!important;z-index:1000!important;background:rgba(0,0,0,.65)!important;justify-content:center!important;align-items:center!important}.instantgram-modal{transition:width ease-in-out .1s!important;display:inline-block!important;width:400px!important;padding:1.6px!important;z-index:1001!important}.instantgram-modal select{margin-left:.8px!important;border:solid 1px #dbdbdb!important;border-radius:3px!important;color:#262626!important;outline:0!important;padding:3px!important;text-align:center!important}@media (min-width:736px){.instantgram-modal{width:500px!important}}.instantgram-modal-content{position:relative;display:flex;flex-direction:column;width:100%!important;pointer-events:auto!important;background-clip:padding-box!important;outline:0!important}.instantgram-modal-header{color:#fff!important;background-color:#fd1d1d!important;background-image:linear-gradient(45deg,#405de6,#5851db,#833ab4,#c13584,#e1306c,#fd1d1d)!important;border-top-left-radius:12px!important;border-top-right-radius:12px!important;padding:0 16px 0 16px!important}.instantgram-modal-header h5{color:#fff!important;font-family:"Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif!important;font-size:16px!important;margin:revert!important}.instantgram-modal-header h5:nth-child(2){margin-top:-15px!important;margin-bottom:20px!important}.instantgram-modal-body{background:#fff!important;position:relative!important;-webkit-box-flex:1!important;-ms-flex:1 1 auto!important;flex:1 1 auto!important;padding:16px!important}.instantgram-modal-body > img{background: black;object-fit:scale-down}.instantgram-modal-body p{display:block!important;margin:revert!important;margin-block-start:1em!important;font-family:"Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif!important;font-size:16px!important}.instantgram-modal-footer{background-color:#fff!important;border-top:1px solid #dbdbdb!important;border-left:0!important;border-right:0!important;border-bottom-left-radius:12px!important;border-bottom-right-radius:12px!important;line-height:1.5!important;min-height:48px!important;padding:4px 8px!important;user-select:none!important;display:-webkit-box!important;display:-ms-flexbox!important;display:flex!important;-webkit-box-align:center!important;-ms-flex-align:center!important;align-items:center!important;-webkit-box-pack:end!important;-ms-flex-pack:end!important;justify-content:center!important}.instantgram-modal-footer button{width:100%!important;min-height:39px!important;background-color:transparent!important;border:0!important;outline:0!important;cursor:pointer!important;font-family:"Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif!important;font-size:16px!important}.instantgram-modal-footer button.active{color:#0095e2!important}.instantgram-modal-show{opacity:1!important}.instantgram-modal-visible{display:flex!important}
+      style.innerHTML = `.instantgram-modal-overlay{display:none!important;opacity:0!important;transition:all ease .1s!important;position:fixed!important;top:0!important;left:0!important;right:0!important;bottom:0!important;z-index:1000!important;background:rgba(0,0,0,.65)!important;justify-content:center!important;align-items:center!important}.instantgram-modal{transition:width ease-in-out .1s!important;display:inline-block!important;width:400px!important;padding:1.6px!important;z-index:1001!important}.instantgram-modal select{margin-left:.8px!important;border:solid 1px #dbdbdb!important;border-radius:3px!important;color:#262626!important;outline:0!important;padding:3px!important;text-align:center!important}@media (min-width:736px){.instantgram-modal{width:500px!important}}.instantgram-modal-content{position:relative;display:flex;flex-direction:column;width:100%!important;pointer-events:auto!important;background-clip:padding-box!important;outline:0!important}.instantgram-modal-header{color:#fff!important;background-color:#fd1d1d!important;background-image:linear-gradient(45deg,#405de6,#5851db,#833ab4,#c13584,#e1306c,#fd1d1d)!important;border-top-left-radius:12px!important;border-top-right-radius:12px!important;padding:0 16px 0 16px!important}.instantgram-modal-header h5{color:#fff!important;font-family:"Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif!important;font-size:16px!important;margin:revert!important}.instantgram-modal-header h5:nth-child(2){margin-top:-15px!important;margin-bottom:20px!important}.instantgram-modal-body{background:#fff!important;position:relative!important;-webkit-box-flex:1!important;-ms-flex:1 1 auto!important;flex:1 1 auto!important;padding:16px!important}.instantgram-modal-body > img{background: black;object-fit:scale-down}.instantgram-modal-body p{display:block!important;margin:revert!important;margin-block-start:1em!important;font-family:"Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif!important;font-size:16px!important}.instantgram-modal-footer{background-color:#fff!important;border-top:1px solid #dbdbdb!important;border-left:0!important;border-right:0!important;border-bottom-left-radius:12px!important;border-bottom-right-radius:12px!important;line-height:1.5!important;min-height:48px!important;padding:4px 8px!important;user-select:none!important;display:-webkit-box!important;display:-ms-flexbox!important;display:flex!important;-webkit-box-align:center!important;-ms-flex-align:center!important;align-items:center!important;-webkit-box-pack:end!important;-ms-flex-pack:end!important;justify-content:center!important}.instantgram-modal-footer button{width:100%!important;min-height:39px!important;background-color:transparent!important;border:0!important;outline:0!important;cursor:pointer!important;font-family:"Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif!important;font-size:16px!important}.instantgram-modal-footer button.active{color:#0095e2!important}.instantgram-modal-show{opacity:1!important}.instantgram-modal-visible{display:flex!important}#instantgram-bulk-download-indicator{text-align:center!important}.instantgram-modal-db {
+    color: #fff!important;
+    background: linear-gradient(45deg,#405de6,#5851db,#833ab4,#c13584,#e1306c,#fd1d1d)!important;
+    display: block;
+    padding: 0.8rem;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+}
+.instantgram-modal-db:focus {
+  outline: none;
+  background: linear-gradient(45deg, rgba(64, 93, 230, 0.5), rgba(88, 81, 219, 0.5), rgba(131, 58, 180, 0.5), rgba(193, 53, 132, 0.5), rgba(225, 48, 108, 0.5), rgba(253, 29, 29, 0.5))!important;
+}
 .instantgram-modal-header {
   text-align: center;
 }
 .instantgram-modal-header h5 {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 .header-text-left {
@@ -61,6 +73,31 @@ export class Modal {
 }
 .header-text-middle {
   margin: 0;
+}
+.header-text-right:last-child {
+  margin-right: 30px;
+}
+.instantgram-light-settings {
+  cursor: pointer;
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 0.3rem;
+  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+  width: 40px;
+  height: 40px;
+  top: 16px;
+  right: 16px;
+  position: absolute;
+}
+.instantgram-light-settings:hover {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
 }`
       document.head.appendChild(style)
     }
@@ -186,6 +223,11 @@ export class Modal {
     setTimeout(() => {
       this.modal!.classList.add('instantgram-modal-show')
     })
+
+    // Re-trigger the callback function if it exists
+    if (this?.callback) {
+      this.callback(this, this.modal!)
+    }
   }
 
   public async close(): Promise<void> {
