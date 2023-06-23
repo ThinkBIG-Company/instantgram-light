@@ -16,5 +16,8 @@ export type Program = {
   regexReelsURI: RegExp
   regexStoriesURI: RegExp
 
+  settings: any
+  settingsJSON: any
+
   foundByModule: string | null | undefined
 }

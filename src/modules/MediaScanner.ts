@@ -1,6 +1,6 @@
 import { Program } from "../App"
 import { Module } from "./Module"
-import { cssCarouselSlider, cssGeneral, jsCarouselSlider } from "../components/Interconnect"
+import { cssGeneral, cssSlideon } from "../components/Interconnect"
 import { MediaType } from "../model/mediaType"
 import { FeedScanner } from "./FeedScanner"
 import { PostReelScanner } from "./PostReelScanner"
@@ -25,14 +25,15 @@ export class MediaScanner implements Module {
         mediaType: MediaType.UNDEFINED,
         mediaEl: undefined,
         mediaURL: undefined,
+        mediaInfo: undefined
       }
 
       // Scanner begins
       // Cancel execution when modal already opened
-      const instantgramRunning = document.querySelector('div.instantgram-modal-overlay.instantgram-modal-visible.instantgram-modal-show')
+      const instantgramRunning = document.querySelector("div.instantgram-modal-overlay.instantgram-modal-visible.instantgram-modal-show")
       if (instantgramRunning) {
-        let iModal: any = document.querySelector('.instantgram-modal')
-        iModal.style.animation = 'horizontal-shaking 0.25s linear infinite'
+        let iModal: any = document.querySelector(".instantgram-modal")
+        iModal.style.animation = "horizontal-shaking 0.25s linear infinite"
 
         // Stop shaking
         setTimeout(function () {
@@ -41,7 +42,7 @@ export class MediaScanner implements Module {
         return
       }
       // Remove previous executed bookmarklet stuff
-      const dataScripts = document.querySelectorAll('#cssGeneral, #cssCarouselSlider, #jsCarouselSlider, #jsDataDownload')
+      const dataScripts = document.querySelectorAll("#cssGeneral, #cssSlideon, #jsDataDownload")
       // loop through each element and remove any inline style attributes or class names
       dataScripts.forEach((el) => {
         el.remove()
@@ -55,19 +56,13 @@ export class MediaScanner implements Module {
       // Append the script element to the document
       document.body.appendChild(generalStyle)
 
-      const carouselSliderStyle = document.createElement("style")
-      carouselSliderStyle.id = "cssCarouselSlider"
+      // Switch css
+      const switchStyle = document.createElement("style")
+      switchStyle.id = "cssSlideon"
       // Set the innerHTML property to the JavaScript code
-      carouselSliderStyle.innerHTML = cssCarouselSlider
+      switchStyle.innerHTML = cssSlideon
       // Append the script element to the document
-      document.body.appendChild(carouselSliderStyle)
-
-      const carouselSliderScript = document.createElement("script")
-      carouselSliderScript.id = "jsCarouselSlider"
-      // Set the innerHTML property to the JavaScript code
-      carouselSliderScript.innerHTML = jsCarouselSlider
-      // Append the script element to the document
-      document.body.appendChild(carouselSliderScript)
+      document.body.appendChild(switchStyle)
 
       const dataDownloadScript = document.createElement("script")
       dataDownloadScript.id = "jsDataDownload"
@@ -99,9 +94,10 @@ export class MediaScanner implements Module {
 
       // Detect story video/image
       if (program.regexStoriesURI.test(program.path)) {
-        new StoriesScanner().execute(program, function (_scannerFound: boolean, foundMediaType: MediaType, foundMediaUrl: string, _scannerProgram: Program) {
+        new StoriesScanner().execute(program, function (_scannerFound: boolean, foundMediaType: MediaType, foundMediaUrl: string, foundMediaInfo: any, _scannerProgram: Program) {
           mediaObj.mediaType = foundMediaType
           mediaObj.mediaURL = foundMediaUrl
+          mediaObj.mediaInfo = foundMediaInfo
 
           if (_scannerFound) {
             found = true
@@ -112,9 +108,10 @@ export class MediaScanner implements Module {
 
       if (mediaObj.mediaEl == null) {
         if (program.regexRootPath.test(program.path)) {
-          new FeedScanner().execute(program, function (_scannerFound: boolean, foundMediaType: MediaType, foundMediaUrl: string, _scannerProgram: Program) {
+          new FeedScanner().execute(program, function (_scannerFound: boolean, foundMediaType: MediaType, foundMediaUrl: string, foundMediaInfo: any, _scannerProgram: Program) {
             mediaObj.mediaType = foundMediaType
             mediaObj.mediaURL = foundMediaUrl
+            mediaObj.mediaInfo = foundMediaInfo
 
             if (_scannerFound) {
               found = true
@@ -124,9 +121,10 @@ export class MediaScanner implements Module {
         }
 
         if (program.regexReelsURI.test(program.path)) {
-          new ReelsScanner().execute(program, function (_scannerFound: boolean, foundMediaType: MediaType, foundMediaUrl: string, _scannerProgram: Program) {
+          new ReelsScanner().execute(program, function (_scannerFound: boolean, foundMediaType: MediaType, foundMediaUrl: string, foundMediaInfo: any, _scannerProgram: Program) {
             mediaObj.mediaType = foundMediaType
             mediaObj.mediaURL = foundMediaUrl
+            mediaObj.mediaInfo = foundMediaInfo
 
             if (_scannerFound) {
               found = true
@@ -136,9 +134,10 @@ export class MediaScanner implements Module {
         }
 
         if (program.regexPostPath.test(program.path) || program.regexReelURI.test(program.path)) {
-          new PostReelScanner().execute(program, function (_scannerFound: boolean, foundMediaType: MediaType, foundMediaUrl: string, _scannerProgram: Program) {
+          new PostReelScanner().execute(program, function (_scannerFound: boolean, foundMediaType: MediaType, foundMediaUrl: string, foundMediaInfo: any, _scannerProgram: Program) {
             mediaObj.mediaType = foundMediaType
             mediaObj.mediaURL = foundMediaUrl
+            mediaObj.mediaInfo = foundMediaInfo
 
             if (_scannerFound) {
               found = true
@@ -148,10 +147,10 @@ export class MediaScanner implements Module {
         }
       }
 
-      callback(found, mediaObj.mediaType, mediaObj.mediaURL, program)
+      callback(found, mediaObj.mediaType, mediaObj.mediaURL, mediaObj.mediaInfo, program)
     } catch (e) {
-      console.error(this.getName() + "()", `[instantgram] ${program.VERSION}`, e)
-      callback(false, null, program)
+      console.error(this.getName() + "()", `[instantgram-light] ${program.VERSION}`, e)
+      callback(false, null, null, null, program)
     }
     /* =====  End of MediaScanner ======*/
   }
