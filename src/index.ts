@@ -21,7 +21,7 @@ if (!window.localStorage.getItem("instantgram-light")) {
         settings: [],
     }
     instantgramData.settings = [
-        { "name": "Enable ads Posts", "value": true },
+        { "name": "Enable ads in posts:", "value": true },
         { "name": "Change the filename format for downloads. The default format is as follows:", "value": "{Username}__{Year}-{Month}-{Day}--{Hour}-{Minute}" }
     ]
     window.localStorage.setItem(
