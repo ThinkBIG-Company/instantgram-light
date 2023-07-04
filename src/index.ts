@@ -11,6 +11,25 @@ const browser = detect()
 
 console.clear()
 
+if (!window.localStorage.getItem("instantgram-light")) {
+    // Settings doesn't exists, create it here
+    const instantgramData = {
+        version: "1.0",
+        onlineVersion: "",
+        lastVerification: 0,
+        dateExpiration: 0,
+        settings: [],
+    }
+    instantgramData.settings = [
+        { "name": "Enable ads Posts", "value": true },
+        { "name": "Change the filename format for downloads. The default format is as follows:", "value": "{Username}__{Year}-{Month}-{Day}--{Hour}-{Minute}" }
+    ]
+    window.localStorage.setItem(
+        "instantgram-light",
+        JSON.stringify(instantgramData)
+    )
+}
+
 const program: Program = {
     VERSION: process.env.VERSION as string,
 
@@ -191,14 +210,6 @@ if (program.hostname == "instagram.com" || program.hostname == "www.instagram.co
                                 if (typeof settingsListData === "string") {
                                     let _data = JSON.parse(settingsListData) as InstantgramData
 
-                                    if (_data.settings === undefined) {
-                                        // Create default object
-                                        _data.settings = [
-                                            { name: "Enable ads in posts:", value: true },
-                                            { name: "Change the filename format for downloads. The default format is as follows:", value: "{Username}__{Year}-{Month}-{Day}--{Hour}-{Minute}" }
-                                        ]
-                                    }
-
                                     // Fill the switches with the existing settings if available
                                     // ENABLE ADS
                                     (<any>el).querySelector("#enabledAds").checked = (_data.settings[0].value === true)
@@ -242,17 +253,6 @@ if (program.hostname == "instagram.com" || program.hostname == "www.instagram.co
                                         }, 1000)
                                     })
                                     // END CUSTOM FILENAME
-                                } else {
-                                    // No
-                                    let _data = JSON.parse(settingsListData) as InstantgramData
-                                    _data.settings = [
-                                        { "name": "Enable ads Posts", "value": true },
-                                        { "name": "Change the filename format for downloads. The default format is as follows:", "value": "{Username}__{Year}-{Month}-{Day}--{Hour}-{Minute}" }
-                                    ]
-                                    window.localStorage.setItem(
-                                        "instantgram-light",
-                                        JSON.stringify(_data)
-                                    )
                                 }
                             }
                         }).open()
