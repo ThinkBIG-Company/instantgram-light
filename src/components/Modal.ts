@@ -202,7 +202,14 @@ export class Modal {
           modalButton.classList.add('active')
         }
 
-        modalButton.onclick = button?.callback ? button.callback : this.close.bind(this)
+        //modalButton.onclick = button?.callback ? button.callback : this.close.bind(this)
+        modalButton.onclick = () => {
+          if (button && button.callback) {
+            button.callback()
+          }
+
+          this.close.bind(this)()
+        }
         modalFooter.appendChild(modalButton)
       })
     } else {
@@ -240,20 +247,6 @@ export class Modal {
     this.modal.classList.remove('instantgram-modal-visible')
     this.modal.parentNode.removeChild(this.modal)
     this.modal = null
-
-    // Cleanup modal css stuff
-    // select all elements on the page with the ID "instantgram-modal"
-    /* const modalElements = document.querySelectorAll('#instantgram-modal');
-    // loop through each element and remove any inline style attributes or class names
-    modalElements.forEach((el) => {
-      el.remove()
-    }) */
-
-    const callbackElements = document.querySelectorAll('#instantgram-modal-css-extension');
-    // loop through each element and remove any inline style attributes or class names
-    callbackElements.forEach((el) => {
-      el.remove()
-    })
   }
 
   public async refresh(): Promise<void> {

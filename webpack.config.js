@@ -10,13 +10,14 @@ module.exports = function (env) {
     const DEV = env && env.goal == 'dev'
 
     return {
-        cache: true,
+        cache: false,
         entry: ['./src/index.ts'],
         output: {
             path: path.resolve(__dirname, 'dist'),
         },
         mode: DEV ? 'development' : 'production',
         devtool: DEV ? 'cheap-module-source-map' : 'nosources-source-map',
+        //devtool: 'cheap-module-source-map',
         plugins: [
             new webpack.DefinePlugin({
                 'process.env.VERSION': JSON.stringify(pkg.version),

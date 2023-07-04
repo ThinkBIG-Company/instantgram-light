@@ -24,6 +24,7 @@ function determineIfGetUpdateIsNecessary(localVersion: string): boolean {
                 onlineVersion: _data.onlineVersion,
                 lastVerification: _data.lastVerification,
                 dateExpiration: _data.dateExpiration,
+                settings: _data.settings
             })
         )
 
@@ -60,7 +61,7 @@ async function update(localVersion: string): Promise<void> {
         // Generate unordered list
         const sentences = changelogText.split(/[.!?]/)
         let ul = '<ul style="padding: 20px;">'
-        sentences.forEach((sentence) => {
+        sentences.forEach((sentence: string) => {
             if (sentence.trim() !== '') {
                 ul += `<li>${sentence.trim()}</li>`
             }
@@ -80,6 +81,7 @@ async function update(localVersion: string): Promise<void> {
                 onlineVersion,
                 lastVerification: Date.now(),
                 dateExpiration: limitDate.valueOf(),
+                settings: JSON.parse(window.localStorage.getItem('instantgram-light')).settings
             })
         )
 

@@ -2,6 +2,9 @@ import { Program } from "../App"
 import { Module } from "./Module"
 import { MediaType } from "../model/mediaType"
 import getElementInViewPercentage from "../helpers/getElementInViewPercentage"
+import generateModalBody from "../helpers/generateModalBody"
+import getReactElement from "../helpers/getReactElement"
+import getUserName from "../helpers/getUserName"
 
 export class ReelsScanner implements Module {
     public getName(): string {
@@ -16,23 +19,14 @@ export class ReelsScanner implements Module {
         return postId
     }
 
-    public getUserName($reactPostNode: { return: { return: { return: { memoizedProps: { post: any } } } } }): string {
-        const post = $reactPostNode?.return?.return?.return?.memoizedProps.post
-
-        return post?.owner?.username ?? false
-    }
-
     /** @suppress {uselessCode} */
     public async execute(program: Program, callback?: any): Promise<any> {
-        let found = false
-
         /* =====================================
-         =              ReelsScanner            =
+         =        ReelsScanner                 =
          ==================================== */
         try {
             // Define default variables
-            let mediaEl = null
-            let mediaType: MediaType = MediaType.UNDEFINED
+            let modalBody = ""
 
             // All grabed feed posts
             let $articles: any
@@ -40,61 +34,55 @@ export class ReelsScanner implements Module {
             // Article
             let $article: any
 
-            let mediaUrl: string
-
             // Scanner begins
-            if (mediaEl == null) {
-                $articles = document.querySelectorAll('section > main > div > div')
-                $articles = Array.from($articles).filter(function (element) {
-                    return (<any>element).children.length > 0
-                })
+            $articles = document.querySelectorAll('section > main > div > div')
+            $articles = Array.from($articles).filter(function (element) {
+                return (<any>element).children.length > 0
+            })
 
-                let mediaElInfos: any[] = []
-                // Find needed post
-                for (let i1 = 0; i1 < $articles.length; i1++) {
-                    let mediaEl = $articles[i1]
+            let mediaElInfos: any[] = []
+            // Find needed post
+            for (let i1 = 0; i1 < $articles.length; i1++) {
+                let mediaEl = $articles[i1]
 
-                    if (mediaEl != null && typeof mediaEl.getBoundingClientRect() != null) {
-                        let elemVisiblePercentage = getElementInViewPercentage(mediaEl)
-                        mediaElInfos.push({ i1, mediaEl, elemVisiblePercentage })
-                    } else {
-                        mediaElInfos.push({ i1, mediaEl, elemVisiblePercentage: 0 })
-                    }
+                if (mediaEl != null && typeof mediaEl.getBoundingClientRect() != null) {
+                    let elemVisiblePercentage = getElementInViewPercentage(mediaEl)
+                    mediaElInfos.push({ i1, mediaEl, elemVisiblePercentage })
+                } else {
+                    mediaElInfos.push({ i1, mediaEl, elemVisiblePercentage: 0 })
                 }
-
-                let objMax = mediaElInfos.reduce((max, current) => max.elemVisiblePercentage > current.elemVisiblePercentage ? max : current)
-                $article = $articles[objMax.i1]
             }
+
+            let objMax = mediaElInfos.reduce((max, current) => max.elemVisiblePercentage > current.elemVisiblePercentage ? max : current)
+            $article = $articles[objMax.i1]
 
             if (typeof $article !== 'undefined' || $article !== null || $article !== '') {
-                const $reactPostEl = [...Array.from($article.querySelectorAll('*'))].filter((element) => {
-                    const instanceKey = Object.keys(element).find((key) => key.includes('Instance') || key.includes('Fiber'))
-                    const $react = element[instanceKey]
-                    return $react?.return?.return?.return?.memoizedProps.post ?? false
-                })[0]
-                const $reactInstanceKey = Object.keys($reactPostEl).find(key => key.includes('Instance') || key.includes('Fiber'))
-                const $reactPostNode = $reactPostEl[$reactInstanceKey]
+                const $reactPostNode = getReactElement($article)
+                const mediaInfo = $reactPostNode?.return?.return?.return?.memoizedProps?.post
+                const userName = getUserName(document, mediaInfo)
 
-                // DON'T MESS WITH ME INSTA!
-                const media = $reactPostNode?.return?.return?.return?.memoizedProps?.post
+                let v = generateModalBody($article, userName, null, program)
+                modalBody += v.modalBody
 
-                if (typeof media.dashInfo.video_dash_manifest !== 'undefined' && media.dashInfo.video_dash_manifest !== null) {
-                    found = true
-                    mediaType = MediaType.Video
-
-                    mediaUrl = media.videoUrl
-                } else {
-                    found = true
-                    mediaType = MediaType.Image
-
-                    mediaUrl = media.src
+                program.foundMediaObj = {
+                    found: v.found,
+                    mediaType: v.mediaType,
+                    mediaInfo: v.mediaInfo,
+                    modalBody: modalBody,
+                    selectedIndex: v.selectedIndex
                 }
             }
 
-            callback(found, mediaType, mediaUrl, program)
+            callback(program)
         } catch (e) {
             console.error(this.getName() + "()", `[instantgram] ${program.VERSION}`, e)
-            callback(false, null, program)
+            program.foundMediaObj = {
+                found: false,
+                mediaType: undefined,
+                mediaURL: undefined,
+                mediaInfo: undefined
+            }
+            callback(program)
         }
         /* =====  End of ReelsScanner ======*/
     }

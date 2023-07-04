@@ -1,5 +1,5 @@
-# <img style="float: left; vertical-align: bottom; " width="35" src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg"> [instantgram-light] v2023.06.23 :love_you_gesture: Light version
-![GitHub release](https://img.shields.io/badge/release-v2023.06.23-green)
+# <img style="float: left; vertical-align: bottom; " width="35" src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg"> [instantgram-light] v2023.07.04 :love_you_gesture: Light version
+![GitHub release](https://img.shields.io/badge/release-v2023.07.04-green)
 
 ![badge](https://img.shields.io/badge/for-instagram-yellow.svg?style=flat-square)
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com/)
@@ -36,6 +36,7 @@ This is a lite version which supports browsers like firefox with 65kb bookmarkle
 Read [CONTRIBUTING.md](CONTRIBUTING.md) for more information. :heart:
 
 ## Changelog
+- v2023.07.04 - [instangram-light] Fixes a problem where the updater had deleted all settings and therefore instantgram did not work properly. The wishes of Orudeon were implemented. Thus it is now possible to customize the file names as one would like. Last but not least, inline buttons for next image and previous image have been implemented. Small fixes.
 - v2023.06.23 - [instangram-light] Used more the styling from big brother [instantgram], fixes issue #1 "Ad images sometimes grabbed".
 - v2023.06.01 - [instangram-light] Fix the problem that videos sometimes do not load.\
 Fix single story are not covered for media downloading.\

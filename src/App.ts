@@ -20,4 +20,6 @@ export type Program = {
   settingsJSON: any
 
   foundByModule: string | null | undefined
+
+  foundMediaObj: any
 }

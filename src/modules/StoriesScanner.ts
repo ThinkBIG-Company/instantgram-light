@@ -1,182 +1,105 @@
 import { Program } from "../App"
 import { Module } from "./Module"
-import { MediaType } from "../model/mediaType"
+import generateModalBody from "../helpers/generateModalBody"
+import getUserName from "../helpers/getUserName"
 
 export class StoriesScanner implements Module {
-  public getName(): string {
-    return "StoriesScanner"
-  }
-
-  public getUserName(element: Document): string | undefined {
-    let userName: string | undefined
-
-    const userNameContainer = element.querySelectorAll("header a")[1]
-    if (userNameContainer) {
-      userName = userNameContainer.textContent
+    public getName(): string {
+        return "StoriesScanner"
     }
 
-    return userName
-  }
+    public pauseCurrentStory() {
+        // Select the button element with SVG viewBox="0 0 48 48"
+        let button = document.querySelector("button._abl- svg[viewBox='0 0 48 48']")
 
-  public pauseCurrentStory() {
-    // Select the button element with SVG viewBox="0 0 48 48"
-    let button = document.querySelector("button._abl- svg[viewBox='0 0 48 48']")
-
-    // Trigger a click event on the button if it exists
-    if (button) {
-      button.closest("button").click()
-    }
-  }
-
-  /** @suppress {uselessCode} */
-  public async execute(program: Program, callback?: any): Promise<any> {
-    let found = false
-
-    /* =====================================
-     =            StoriesScanner           =
-     ==================================== */
-    try {
-      // Define default variables
-      let mediaType: MediaType = MediaType.UNDEFINED
-      let mediaUrl: string
-      let mediaInfo: any
-
-      // Container
-      let $container = document.querySelector("body > div:nth-child(2)")
-      // Scanner begins
-      if ($container) {
-        const userName = this.getUserName(document)
-
-        // Check requirements are met
-        if (userName == null) {
-          return
+        // Trigger a click event on the button if it exists
+        if (button) {
+            button.closest("button").click()
         }
-        // END
+    }
 
-        // Detect right frontend
-        let multipleStoriesCount = $container.querySelector("section > div > div").childElementCount
+    /** @suppress {uselessCode} */
+    public async execute(program: Program, callback?: any): Promise<any> {
+        /* =====================================
+         =            StoriesScanner           =
+         ==================================== */
+        try {
+            // Define default variables
+            let modalBody = ""
 
-        // Specific selector for each frontend
-        if (multipleStoriesCount > 1) {
-          let stories: any = $container.querySelector("section > div > div").childNodes
+            // Container
+            let $container = document.querySelector("body > div:nth-child(2)")
+            // Scanner begins
+            if ($container) {
+                const userName = getUserName(document, null)
 
-          for (let i = 0; i < (<any>stories).length; i++) {
-            let transformStyle = (<any>stories[i]).style.transform
-
-            if (<any>stories[i].childElementCount > 0 && transformStyle.includes("scale(1)")) {
-              // Pause any playing videos before show modal
-              this.pauseCurrentStory()
-
-              const $reactPostEl = [...Array.from(stories[i].querySelectorAll("*"))].filter((element) => {
-                const instanceKey = Object.keys(element).find((key) => key.includes("Instance") || key.includes("Fiber"))
-                const $react = element[instanceKey]
-                return $react?.return?.return?.return?.memoizedProps.post ?? false
-              })[0]
-              const $reactInstanceKey = Object.keys($reactPostEl).find(key => key.includes("Instance") || key.includes("Fiber"))
-              const $reactPostNode = $reactPostEl[$reactInstanceKey]
-
-              // DON'T MESS WITH ME INSTA!
-              if ($reactPostNode?.return?.return?.return?.memoizedProps?.post?.isSidecar || ($reactPostNode?.return?.return?.return?.memoizedProps?.post?.sidecarChildren && $reactPostNode?.return?.return?.return?.memoizedProps?.post?.sidecarChildren.length > 0)) {
-                mediaInfo = $reactPostNode?.return?.return?.return?.memoizedProps?.post
-
-                found = true
-                mediaType = MediaType.Carousel
-
-                for (let sC = 0; sC < $reactPostNode?.return?.return?.return?.memoizedProps?.post?.sidecarChildren.length; sC++) {
-                  const node = $reactPostNode?.return?.return?.return?.memoizedProps?.post
-                  const scMedia = $reactPostNode?.return?.return?.return?.memoizedProps?.post?.sidecarChildren[sC]
-
-                  if (typeof scMedia.dashInfo.video_dash_manifest !== "undefined" && scMedia.dashInfo.video_dash_manifest !== null) {
-                    found = true
-                    mediaType = MediaType.Video
-
-                    mediaUrl = $reactPostNode?.return?.return?.return?.memoizedProps?.post?.videoUrl
-                  } else {
-                    found = true
-                    mediaType = MediaType.Image
-
-                    mediaUrl = $reactPostNode?.return?.return?.return?.memoizedProps?.post?.src
-                  }
+                // Check requirements are met
+                if (userName == null) {
+                    return
                 }
-              } else {
-                // Single image/video
-                mediaInfo = $reactPostNode?.return?.return?.return?.memoizedProps?.post
+                // END
 
-                if (typeof mediaInfo.dashInfo.video_dash_manifest !== "undefined" && mediaInfo.dashInfo.video_dash_manifest !== null) {
-                  found = true
-                  mediaType = MediaType.Video
+                // Detect right frontend
+                let multipleStoriesCount = $container.querySelector("section > div > div").childElementCount
 
-                  mediaUrl = $reactPostNode?.return?.return?.return?.memoizedProps?.post?.videoUrl
+                // Specific selector for each frontend
+                if (multipleStoriesCount > 1) {
+                    let stories: any = $container.querySelector("section > div > div").childNodes
+
+                    for (let i = 0; i < (<any>stories).length; i++) {
+                        let transformStyle = (<any>stories[i]).style.transform
+
+                        if (<any>stories[i].childElementCount > 0 && transformStyle.includes("scale(1)")) {
+                            // Pause any playing videos before show modal
+                            this.pauseCurrentStory()
+
+                            let v = generateModalBody(stories[i], userName, null, program)
+                            modalBody += v.modalBody
+
+                            program.foundMediaObj = {
+                                found: v.found,
+                                mediaType: v.mediaType,
+                                mediaInfo: v.mediaInfo,
+                                modalBody: modalBody
+                            }
+                            break
+                        }
+                    }
                 } else {
-                  found = true
-                  mediaType = MediaType.Image
+                    let story: any = $container.querySelector("section section").parentElement.firstChild
+                    // Pause any playing videos before show modal
+                    this.pauseCurrentStory()
 
-                  mediaUrl = $reactPostNode?.return?.return?.return?.memoizedProps?.post?.src
+                    let v = generateModalBody(story, userName, null, program)
+                    modalBody += v.modalBody
+
+                    program.foundMediaObj = {
+                        found: v.found,
+                        mediaType: v.mediaType,
+                        mediaInfo: v.mediaInfo,
+                        modalBody: modalBody
+                    }
                 }
-              }
-
-              break
-            }
-          }
-        } else {
-          let story: any = $container.querySelector("section section").parentElement.firstChild
-          // Pause any playing videos before show modal
-          this.pauseCurrentStory()
-
-          const $reactPostEl = [...Array.from(story.querySelectorAll("*"))].filter((element) => {
-            const instanceKey = Object.keys(element).find((key) => key.includes("Instance") || key.includes("Fiber"))
-            const $react = element[instanceKey]
-            return $react?.return?.return?.return?.memoizedProps.post ?? false
-          })[0]
-          const $reactInstanceKey = Object.keys($reactPostEl).find(key => key.includes("Instance") || key.includes("Fiber"))
-          const $reactPostNode = $reactPostEl[$reactInstanceKey]
-
-          if ($reactPostNode?.return?.return?.return?.memoizedProps?.post?.isSidecar || ($reactPostNode?.return?.return?.return?.memoizedProps?.post?.sidecarChildren && $reactPostNode?.return?.return?.return?.memoizedProps?.post?.sidecarChildren.length > 0)) {
-            found = true
-            mediaType = MediaType.Carousel
-
-            for (let sC = 0; sC < $reactPostNode?.return?.return?.return?.memoizedProps?.post?.sidecarChildren.length; sC++) {
-              const node = $reactPostNode?.return?.return?.return?.memoizedProps?.post
-              const scMedia = $reactPostNode?.return?.return?.return?.memoizedProps?.post?.sidecarChildren[sC]
-
-              if (typeof scMedia.dashInfo.video_dash_manifest !== "undefined" && scMedia.dashInfo.video_dash_manifest !== null) {
-                found = true
-                mediaType = MediaType.Video
-
-                mediaUrl = $reactPostNode?.return?.return?.return?.memoizedProps?.post?.videoUrl
-              } else {
-                found = true
-                mediaType = MediaType.Image
-
-                mediaUrl = $reactPostNode?.return?.return?.return?.memoizedProps?.post?.src
-              }
-            }
-          } else {
-            // Single image/video
-            const media = $reactPostNode?.return?.return?.return?.memoizedProps?.post
-
-            if (typeof media.dashInfo.video_dash_manifest !== "undefined" && media.dashInfo.video_dash_manifest !== null) {
-              found = true
-              mediaType = MediaType.Video
-
-              mediaUrl = $reactPostNode?.return?.return?.return?.memoizedProps?.post?.videoUrl
             } else {
-              found = true
-              mediaType = MediaType.Image
-
-              mediaUrl = $reactPostNode?.return?.return?.return?.memoizedProps?.post?.src
+                program.foundMediaObj = {
+                    found: false,
+                    mediaType: undefined,
+                    mediaURL: undefined,
+                    mediaInfo: undefined
+                }
             }
-          }
-        }
-      } else {
-        console.log("Could not find container element")
-      }
 
-      callback(found, mediaType, mediaUrl, mediaInfo, program)
-    } catch (e) {
-      console.error(this.getName() + "()", `[instantgram-light] ${program.VERSION}`, e)
-      callback(false, null, null, null, program)
+            callback(program)
+        } catch (e) {
+            console.error(this.getName() + "()", `[instantgram-light] ${program.VERSION}`, e)
+            program.foundMediaObj = {
+                found: false,
+                mediaType: undefined,
+                mediaURL: undefined,
+                mediaInfo: undefined
+            }
+            callback(program)
+        }
+        /* =====  End of StoriesScanner ======*/
     }
-    /* =====  End of StoriesScanner ======*/
-  }
 }

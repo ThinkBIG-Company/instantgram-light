@@ -1,13 +1,15 @@
-import { Program } from './App'
-import { MediaType } from './model/mediaType'
-import { MediaScanner } from './modules/MediaScanner'
-import { Modal } from './components/Modal'
-import localize from './helpers/localize'
+import { Program } from "./App"
+import { MediaScanner } from "./modules/MediaScanner"
+import { Modal } from "./components/Modal"
 import { detect } from "detect-browser"
-import update from './modules/Update'
+import update from "./modules/Update"
+import localize from "./helpers/localize"
+import getUserName from "./helpers/getUserName"
 
 // Init browser detection
 const browser = detect()
+
+console.clear()
 
 const program: Program = {
     VERSION: process.env.VERSION as string,
@@ -25,39 +27,20 @@ const program: Program = {
     regexReelsURI: /reels\/(.*)+/,
     regexStoriesURI: /stories\/(.*)+/,
 
-    settings: window.localStorage.getItem('instantgram-light') as string || [],
-    settingsJSON: JSON.parse(window.localStorage.getItem('instantgram-light') as string) as InstantgramData || [],
+    settings: window.localStorage.getItem("instantgram-light") as string || [],
+    settingsJSON: JSON.parse(window.localStorage.getItem("instantgram-light") as string) as InstantgramData || [],
 
-    foundByModule: null
-}
-
-function unixTimestampToDate(unixTimestamp: number): string {
-    const date = new Date(unixTimestamp * 1000)
-    const isoDate = date.toISOString().slice(0, 10)
-    const time = date.toISOString().slice(11, 16).replace(':', '-')
-    return `${isoDate}--${time}`
-}
-
-function getUserName(element: Document, post: any): string {
-    if (post?.owner?.username) {
-        return post?.owner?.username as string
-    } else {
-        const userNameContainer = element.querySelectorAll("header a")[1]
-        if (userNameContainer) {
-            return userNameContainer.textContent
-        } else {
-            return undefined
-        }
-    }
+    foundByModule: null,
+    foundMediaObj: undefined
 }
 
 if (process.env.DEV) {
-    console.info(['Developer Mode Caution!', program])
+    console.info(["Developer Mode Caution!", program])
 
     if (program.browser) {
-        console.info(['Browser Name', program.browser.name])
-        console.info(['Browser Version', program.browser.version])
-        console.info(['Browser OS', program.browser.os])
+        console.info(["Browser Name", program.browser.name])
+        console.info(["Browser Version", program.browser.version])
+        console.info(["Browser OS", program.browser.os])
     }
 }
 
@@ -65,18 +48,16 @@ if (process.env.DEV) {
  =            Program            =
  ===============================*/
 // verify if are running on instagram site
-if (program.hostname == 'instagram.com' || program.hostname == 'www.instagram.com') {
-    new MediaScanner().execute(program, function (scannerFound: boolean, foundMediaType: MediaType, foundMediaUrl: string, foundMediaInfo: any, scannerProgram: Program) {
-        program.foundByModule = scannerProgram.foundByModule
-
+if (program.hostname == "instagram.com" || program.hostname == "www.instagram.com") {
+    new MediaScanner().execute(program, function (scannerProgram: Program) {
         if (process.env.DEV) {
-            console.log('scannerFound', scannerFound)
-            console.log('foundByModule', program.foundByModule)
+            console.log("scannerFound", scannerProgram.foundMediaObj.found)
+            console.log("foundByModule", scannerProgram.foundByModule)
         }
 
-        if (scannerFound == false) {
+        if (scannerProgram.foundMediaObj.found == false) {
             if (scannerProgram.regexProfilePath.test(scannerProgram.path)) {
-                program.foundByModule = 'CUSTOM'
+                program.foundByModule = "CUSTOM"
 
                 new Modal({
                     heading: [
@@ -88,35 +69,38 @@ if (program.hostname == 'instagram.com' || program.hostname == 'www.instagram.co
                         `
                     ],
                     body: [
-                        localize('index@profilepage_downloader_disabled')
+                        localize("index@profilepage_downloader_disabled")
                     ],
-                    bodyStyle: 'text-align:center',
+                    bodyStyle: "text-align:center",
                     buttonList: [{
                         active: true,
-                        text: 'Ok'
+                        text: "Ok"
+                    }]
+                }).open()
+            }
+
+            if (scannerProgram.foundByModule == null || scannerProgram.foundByModule == undefined) {
+                new Modal({
+                    heading: [
+                        `<h5>
+                        <span class="header-text-left">[instantgram-light]</span>
+                        <span class="header-text-right" style="margin-right: 0">v${program.VERSION}</span>
+                    </h5>
+                    `
+                    ],
+                    body: [
+                        localize("index#program@alert_dontFound")
+                    ],
+                    bodyStyle: "text-align:center",
+                    buttonList: [{
+                        active: true,
+                        text: "Ok"
                     }]
                 }).open()
             }
         } else {
             // Fix stuttering videos
-            const updatedUrl = foundMediaUrl.replace(/\/\/[^/]+\.cdninstagram\.com/, "//scontent.cdninstagram.com")
-            const userName = getUserName(document, foundMediaInfo)
-
-            // Switch frontend depends on media type
-            let modalBody = ""
-            if (/\.(mp4)(\?.*)?$/.test(updatedUrl)) {
-                modalBody += `<div style="background:black;"><video src="${updatedUrl}" style="background:black; max-width: 500px; max-height: 400px; height: auto;" controls></video>`
-                // Add download button
-                modalBody += `<button onclick="downloadFromHref('${updatedUrl}', '${userName + '_' + unixTimestampToDate(foundMediaInfo.postedAt)}.mp4')" style="font-size:20px;font-weight:600;margin-top:-4px;" class="instantgram-modal-db">Download</button>`
-
-                modalBody += `</div>`
-            } else {
-                modalBody += `<div style="background:black;"><img src="${updatedUrl}" style="max-width: 500px; max-height: 400px; height: auto;" />`
-                // Add download button
-                modalBody += `<button onclick="downloadFromHref('${updatedUrl}', '${userName + '_' + unixTimestampToDate(foundMediaInfo.postedAt)}.jpg')" style="font-size:20px;font-weight:600;margin-top:-4px;" class="instantgram-modal-db">Download</button>`
-
-                modalBody += `</div>`
-            }
+            const userName = getUserName(document, scannerProgram.foundMediaObj.mediaInfo)
 
             new Modal({
                 heading: [
@@ -128,43 +112,75 @@ if (program.hostname == 'instagram.com' || program.hostname == 'www.instagram.co
                       </h5>
                     `
                 ],
-                body: [modalBody],
-                bodyStyle: 'padding:0!important;text-align:center',
+                body: [scannerProgram.foundMediaObj.modalBody],
+                bodyStyle: "padding:0!important;text-align:center",
                 buttonList: [{
                     active: true,
-                    text: localize('index#program#profilePageDownload@is_private_modal_btn')
+                    text: localize("index@close")
                 }],
                 callback: (_modal: Modal, el: HTMLElement) => {
-                    el.querySelector('.instantgram-light-settings').addEventListener('click', function (_event) {
+                    if (el.querySelector(".slider") !== null) {
+                        const slider = el.querySelector(".slider") as HTMLElement
+                        const slides = el.querySelectorAll(".slide")
+                        const sliderControls = el.querySelector(".slider-controls")
+                        let slideIndex = scannerProgram.foundMediaObj.selectedIndex
+                        // Create buttons for each slide
+                        for (let i = 0; i < slides.length; i++) {
+                            const button = document.createElement("button") as HTMLElement
+                            button.setAttribute("data-index", String(i))
+                            button.innerHTML = String(i + 1)
+                            button.addEventListener("click", () => {
+                                slideIndex = i
+                                updateSliderPosition()
+                            });
+                            sliderControls.appendChild(button)
+                        }
+
+                        const buttons = el.querySelectorAll(".slider-controls button")
+
+                        function updateSliderPosition() {
+                            const slideWidth = slides[0].clientWidth
+                            const translateX = -slideWidth * slideIndex
+                            slider.style.transform = `translateX(${translateX}px)`
+                            buttons.forEach((button, index) => {
+                                if (index === slideIndex) {
+                                    button.classList.add("active")
+                                } else {
+                                    button.classList.remove("active")
+                                }
+                            })
+                        }
+                        // Set initial active button
+                        buttons[slideIndex].classList.add("active")
+                        updateSliderPosition()
+                    }
+
+                    // Settings modal
+                    el.querySelector(".instantgram-light-settings").addEventListener("click", function (_event) {
                         new Modal({
                             heading: [
                                 `<h5>
                                       <span class="header-text-left">[instantgram-light]</span>
+                                      <span class="header-text-middle">${localize("index#program#modal_settings@title")}</span>
                                       <span class="header-text-right" style="margin-right: 0">v${program.VERSION}</span>
                                   </h5>
                                 `
                             ],
-                            body: [`<form style="padding-top: 25px;padding-bottom: 50px;padding-left: 20px;padding-right: 20px;"><div style="position: relative;">
-                            <div class="left-div" style="position: absolute;"><label>Enable monetized posts (Requires ad blockers to be disabled):</label></div>
-                            <div class="right-div" style="position: absolute;right: 0;"><label class="slideon" style="margin-left: 100px;">
-                            <input type="checkbox" id="enabledAds">
-                            <span class="slideon-slider"></span>
-                          </label></div><div style="clear:both;"></div>
-                          </div></form>`],
-                            bodyStyle: 'padding:0!important;text-align:center',
+                            body: [`<form style="padding-top: 25px;padding-bottom: 25px;padding-left: 20px;padding-right: 20px;"><div class="container"><div class="row mb-20"><strong>${localize("index#program#modal_settings@settings_attention")}</strong></div><div class="row"><div class="left"><strong>${localize("index#program#modal_settings@settings_1")}:</strong></div><div class="right"><label class="slideon"><input type="checkbox" id="enabledAds"><span class="slideon-slider"></span></label></div></div><div class="row">&nbsp;</div><div class="row"><div class="left" style="text-align: left"><strong>${localize("index#program#modal_settings@settings_2")}</strong><br>{Username}__{Year}-{Month}-{Day}--{Hour}-{Minute}<br><br><strong>${localize("index#program#modal_settings@settings_2_1")}</strong></div></div><div class="row"><div class="left" style="display: contents"><input type="text" id="customFilename" value="{Username}__{Year}-{Month}-{Day}--{Hour}-{Minute}"><button type="button" id="saveFormat">${localize("index@save")}</button></div></div></div></form>`],
+                            bodyStyle: "padding:0!important;text-align:center",
                             buttonList: [{
                                 active: true,
-                                text: localize('index#program#profilePageDownload@is_private_modal_btn')
+                                text: localize("index@close")
                             }],
                             callback: (_modal: Modal, el: HTMLElement) => {
-                                var elements = el.querySelectorAll('.slideon.slideon-auto')
+                                let elements = el.querySelectorAll(".slideon.slideon-auto")
                                 elements.forEach(function (element) {
                                     element.classList.remove("slideon-auto")
-                                    var wrapper = document.createElement('label') as any
+                                    let wrapper = document.createElement("label") as any
                                     wrapper.className = element.classList
 
-                                    var slider = document.createElement('span')
-                                    slider.className = 'slideon-slider'
+                                    let slider = document.createElement("span")
+                                    slider.className = "slideon-slider"
 
                                     element.after(wrapper)
                                     wrapper.appendChild(element)
@@ -172,68 +188,87 @@ if (program.hostname == 'instagram.com' || program.hostname == 'www.instagram.co
                                 })
 
                                 const settingsListData = program.settings
-                                if (typeof settingsListData === 'string') {
+                                if (typeof settingsListData === "string") {
                                     let _data = JSON.parse(settingsListData) as InstantgramData
 
                                     if (_data.settings === undefined) {
                                         // Create default object
                                         _data.settings = [
-                                            { name: "Enable ads Posts", value: true }
+                                            { name: "Enable ads in posts:", value: true },
+                                            { name: "Change the filename format for downloads. The default format is as follows:", value: "{Username}__{Year}-{Month}-{Day}--{Hour}-{Minute}" }
                                         ]
                                     }
 
                                     // Fill the switches with the existing settings if available
+                                    // ENABLE ADS
                                     (<any>el).querySelector("#enabledAds").checked = (_data.settings[0].value === true)
-
                                     const enabledAds = (<any>el).querySelector("#enabledAds")
-                                    enabledAds.addEventListener('change', function (_event) {
+                                    enabledAds.addEventListener("change", function (_event) {
                                         _data.settings = [
-                                            { name: "Enable ads Posts", value: (el.querySelector("#enabledAds") as HTMLInputElement).checked }
+                                            { name: "Enable ads in posts:", value: (el.querySelector("#enabledAds") as HTMLInputElement).checked },
+                                            { name: "Change the filename format for downloads. The default format is as follows:", value: _data.settings[1].value }
                                         ]
-
                                         window.localStorage.setItem(
-                                            'instantgram-light',
+                                            "instantgram-light",
                                             JSON.stringify(_data)
                                         )
                                     })
+                                    // END ENABLE ADS
+                                    // CUSTOM FILENAME
+                                    const customFilename = (<any>el).querySelector("#customFilename")
+                                    // Load custom filename
+                                    customFilename.value = _data.settings[1].value
+
+                                    const saveFormat = (<any>el).querySelector("#saveFormat")
+                                    saveFormat.addEventListener("click", function (event) {
+                                        event.preventDefault()
+
+                                        _data.settings = [
+                                            { name: "Enable ads in posts:", value: _data.settings[0].value },
+                                            { name: "Change the filename format for downloads. The default format is as follows:", value: (el.querySelector("#customFilename") as HTMLInputElement).value }
+                                        ]
+                                        window.localStorage.setItem(
+                                            "instantgram-light",
+                                            JSON.stringify(_data)
+                                        )
+
+                                        saveFormat.textContent = localize("index@saved")
+                                        saveFormat.style.color = "white"
+                                        saveFormat.style.backgroundColor = "green"
+                                        setTimeout(() => {
+                                            saveFormat.textContent = localize("index@save")
+                                            saveFormat.style.color = "black"
+                                            saveFormat.style.backgroundColor = "buttonface"
+                                        }, 1000)
+                                    })
+                                    // END CUSTOM FILENAME
                                 } else {
                                     // No
                                     let _data = JSON.parse(settingsListData) as InstantgramData
-                                    _data.settings = [{ "name": "Enable ads Posts", "value": true }]
+                                    _data.settings = [
+                                        { "name": "Enable ads Posts", "value": true },
+                                        { "name": "Change the filename format for downloads. The default format is as follows:", "value": "{Username}__{Year}-{Month}-{Day}--{Hour}-{Minute}" }
+                                    ]
                                     window.localStorage.setItem(
-                                        'instantgram-light',
+                                        "instantgram-light",
                                         JSON.stringify(_data)
                                     )
                                 }
                             }
                         }).open()
                     })
+
+                    // Close callback
+                    el.querySelector(".instantgram-modal-footer > .instantgram-modal-button").addEventListener("click", function (_event) {
+                        // Cleanup stuff
+                        // Get all elements that match the specified selector
+                        const elements = document.querySelectorAll("[id^='instantgram-']")
+                        elements.forEach(element => {
+                            element.remove()
+                        })
+                    })
                 }
             }).open()
-        }
-
-        if (program.foundByModule == undefined) {
-            if (!process.env.DEV) {
-                if (foundMediaType == MediaType.UNDEFINED) {
-                    new Modal({
-                        heading: [
-                            `<h5>
-                                <span class="header-text-left">[instantgram-light]</span>
-                                <span class="header-text-right" style="margin-right: 0">v${program.VERSION}</span>
-                            </h5>
-                            `
-                        ],
-                        body: [
-                            localize('index#program@alert_dontFound')
-                        ],
-                        bodyStyle: 'text-align:center',
-                        buttonList: [{
-                            active: true,
-                            text: 'Ok'
-                        }]
-                    }).open()
-                }
-            }
         }
     })
 
@@ -251,12 +286,12 @@ if (program.hostname == 'instagram.com' || program.hostname == 'www.instagram.co
             `
         ],
         body: [
-            localize('index@alert_onlyWorks')
+            localize("index@alert_onlyWorks")
         ],
-        bodyStyle: 'text-align:center',
+        bodyStyle: "text-align:center",
         buttonList: [{
             active: true,
-            text: 'Ok'
+            text: "Ok"
         }]
     }).open()
 }
