@@ -28,6 +28,22 @@ if (!window.localStorage.getItem("instantgram-light")) {
         "instantgram-light",
         JSON.stringify(instantgramData)
     )
+} else {
+    const instantgramData = {
+        settings: [
+            { "name": "Enable ads in posts:", "value": true },
+            { "name": "Change the filename format for downloads. The default format is as follows:", "value": "{Username}__{Year}-{Month}-{Day}--{Hour}-{Minute}" }
+        ],
+    }
+    const mergedObject = {
+        ...JSON.parse(window.localStorage.getItem("instantgram-light") as string) as InstantgramData,
+        ...instantgramData
+    }
+
+    window.localStorage.setItem(
+        "instantgram-light",
+        JSON.stringify(mergedObject)
+    )
 }
 
 const program: Program = {
