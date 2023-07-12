@@ -279,6 +279,27 @@ if (program.hostname == "instagram.com" || program.hostname == "www.instagram.co
 
                     // Close callback
                     el.querySelector(".instantgram-modal-footer > .instantgram-modal-button").addEventListener("click", function (_event) {
+                        // If story paused, restart
+                        let storyContainer = document.querySelector("body > div:nth-child(2)")
+                        if (storyContainer) {
+                            let button = document.querySelector("header > div:nth-child(2) > div:nth-child(2) > div:first-child")
+                            // Trigger a click event on the play button if it exists
+                            let svgElement = button.querySelector("svg[viewBox='0 0 24 24']")
+                            if (svgElement !== null) {
+                                if (typeof (<HTMLElement>svgElement).click === "function") {
+                                    (<HTMLElement>svgElement).click()
+                                } else {
+                                    // Alternative approach for older browsers
+                                    const clickEvent = new MouseEvent("click", {
+                                        view: window,
+                                        bubbles: true,
+                                        cancelable: true,
+                                    });
+                                    svgElement.dispatchEvent(clickEvent)
+                                }
+                            }
+                        }
+
                         // Cleanup stuff
                         // Get all elements that match the specified selector
                         const elements = document.querySelectorAll("[id^='instantgram-']")

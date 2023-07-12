@@ -9,12 +9,21 @@ export class StoriesScanner implements Module {
     }
 
     public pauseCurrentStory() {
-        // Select the button element with SVG viewBox="0 0 48 48"
-        let button = document.querySelector("button._abl- svg[viewBox='0 0 48 48']")
-
-        // Trigger a click event on the button if it exists
-        if (button) {
-            button.closest("button").click()
+        let button = document.querySelector("header > div:nth-child(2) > div:nth-child(2) > div:first-child")
+        // Trigger a click event on the pause button if it exists
+        let svgElement = button.querySelector("svg[viewBox='0 0 48 48']")
+        if (svgElement !== null) {
+            if (typeof (<HTMLElement>svgElement).click === "function") {
+                (<HTMLElement>svgElement).click()
+            } else {
+                // Alternative approach for older browsers
+                const clickEvent = new MouseEvent("click", {
+                    view: window,
+                    bubbles: true,
+                    cancelable: true,
+                });
+                svgElement.dispatchEvent(clickEvent)
+            }
         }
     }
 
