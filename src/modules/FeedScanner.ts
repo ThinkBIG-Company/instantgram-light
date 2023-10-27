@@ -1,10 +1,6 @@
 import { Program } from "../App"
 import { Module } from "./Module"
-import { MediaType } from "../model/mediaType"
-import getElementInViewPercentage from "../helpers/getElementInViewPercentage"
-import getUserName from "../helpers/getUserName"
-import generateModalBody from "../helpers/generateModalBody"
-import getReactElement from "../helpers/getReactElement"
+import { getElementInViewPercentage, generateModalBody } from "../helpers/utils"
 
 export class FeedScanner implements Module {
     public getName(): string {
@@ -44,46 +40,35 @@ export class FeedScanner implements Module {
             $article = $articles[objMax.i1]
 
             if (typeof $article !== 'undefined' || $article !== null || $article !== '') {
-                const $reactPostNode = getReactElement($article)
-                const mediaInfo = $reactPostNode?.return?.return?.return?.memoizedProps?.post
-                const userName = getUserName(document, mediaInfo)
-
                 // DON'T MESS WITH ME INSTA!
                 // If any adblocker active dont grab it
-                if ($article.getBoundingClientRect().height < 40) {                    
+                if ($article.getBoundingClientRect().height < 40) {
                     return
                 }
-                if (program?.settingsJSON?.settings?.[0]?.value === false && mediaInfo?.isSponsored) {                    
-                    program.foundMediaObj = {
-                        found: true,
-                        mediaType: MediaType.Ad,
-                        mediaURL: undefined,
-                        mediaInfo: undefined
-                    }
 
-                    callback(program)
-                    return false
-                }
-
-                let v = generateModalBody($article, userName, null, program)
+                let v = await generateModalBody($article, program)
 
                 program.foundMediaObj = {
                     found: v.found,
                     mediaType: v.mediaType,
                     mediaInfo: v.mediaInfo,
                     modalBody: v.modalBody,
-                    selectedIndex: v.selectedIndex
+                    selectedIndex: v.selectedIndex,
+                    userName: v.userName
                 }
             }
 
             callback(program)
         } catch (e) {
-            console.error(this.getName() + "()", `[instantgram-light] ${program.VERSION}`, e)
+            //console.error(this.getName() + "()", `[${program.NAME}] ${program.VERSION}`, e)
+            console.error(this.getName() + "()", e)
             program.foundMediaObj = {
                 found: false,
                 mediaType: undefined,
-                mediaURL: undefined,
-                mediaInfo: undefined
+                mediaInfo: undefined,
+                modalBody: undefined,
+                selectedIndex: undefined,
+                userName: undefined
             }
             callback(program)
         }

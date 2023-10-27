@@ -1,6 +1,7 @@
 import { BrowserInfo, SearchBotDeviceInfo, BotInfo, NodeInfo, ReactNativeInfo } from "detect-browser"
 
 export type Program = {
+  NAME: string
   VERSION: string
 
   browser: BrowserInfo | SearchBotDeviceInfo | BotInfo | NodeInfo | ReactNativeInfo | null
@@ -15,9 +16,6 @@ export type Program = {
   regexReelURI: RegExp
   regexReelsURI: RegExp
   regexStoriesURI: RegExp
-
-  settings: any
-  settingsJSON: any
 
   foundByModule: string | null | undefined
 

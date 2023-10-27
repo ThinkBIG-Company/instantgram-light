@@ -4,6 +4,7 @@ const webpack = require('webpack');
 
 const pkg = require('./package.json');
 const ESLintPlugin = require('eslint-webpack-plugin');
+//const ClosurePlugin = require('closure-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = function (env) {
@@ -16,7 +17,8 @@ module.exports = function (env) {
             path: path.resolve(__dirname, 'dist'),
         },
         mode: DEV ? 'development' : 'production',
-        devtool: DEV ? 'cheap-module-source-map' : 'nosources-source-map',
+        //devtool: DEV ? 'cheap-module-source-map' : 'nosources-source-map',
+        devtool: 'source-map',
         //devtool: 'cheap-module-source-map',
         plugins: [
             new webpack.DefinePlugin({
@@ -26,23 +28,29 @@ module.exports = function (env) {
             new ESLintPlugin()
         ],
         optimization: {
-            minimize: true,
             minimizer: [
                 new TerserPlugin({
-                    parallel: true,
-                    extractComments: false,
                     terserOptions: {
-                        compress: { drop_console: false },
-                        output: { comments: false },
-                        sourceMap: true,
-                        module: true,
-                        toplevel: true,
-                        ecma: 2015,
-                        warnings: false,
-                      }
+                        output: {
+                            comments: false,
+                        },
+                    },
                 }),
             ],
         },
+        // optimization: {
+        //     minimizer: [
+        //         new ClosurePlugin({ mode: 'STANDARD' }, {
+        //             // compiler flags here
+        //             //
+        //             // for debugging help, try these:
+        //             //
+        //             //formatting: 'PRETTY_PRINT',
+        //             //debug: true,
+        //             // renaming: false
+        //         })
+        //     ]
+        // },
         resolve: {
             extensions: ['.ts'],
             modules: ['node_modules']
@@ -55,7 +63,7 @@ module.exports = function (env) {
                 }]
             }, {
                 test: /\.js$/,
-                exclude: /(node_modules|bower_components|legacy)/,
+                exclude: /(node_modules|bower_components)/,
                 use: {
                     loader: 'babel-loader',
                     options: {

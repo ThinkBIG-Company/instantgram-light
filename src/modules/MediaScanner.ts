@@ -5,6 +5,7 @@ import { FeedScanner } from "./FeedScanner"
 import { PostReelScanner } from "./PostReelScanner"
 import { ReelsScanner } from "./ReelsScanner"
 import { StoriesScanner } from "./StoriesScanner"
+import { removeStyleTagsWithIDs } from "../helpers/utils"
 
 export class MediaScanner implements Module {
     public getName(): string {
@@ -19,9 +20,9 @@ export class MediaScanner implements Module {
         try {
             // Scanner begins
             // Cancel execution when modal already opened
-            const instantgramRunning = document.querySelector("div.instantgram-modal-overlay.instantgram-modal-visible.instantgram-modal-show")
-            if (instantgramRunning) {
-                let iModal: any = document.querySelector(".instantgram-modal")
+            const appRunning = document.querySelector("div." + program.NAME + "-modal-overlay." + program.NAME + "-modal-visible." + program.NAME + "-modal-show")
+            if (appRunning) {
+                let iModal: any = document.querySelector("." + program.NAME + "-modal")
                 iModal.style.animation = "horizontal-shaking 0.25s linear infinite"
 
                 // Stop shaking
@@ -31,15 +32,17 @@ export class MediaScanner implements Module {
                 return
             }
             // Remove previous executed bookmarklet stuff
-            const dataScripts = document.querySelectorAll("#instantgram-cssGeneral, #instantgram-cssSlideOn, #instantgram-cssCarouselSlider, #instantgram-jsDataDownload")
-            // loop through each element and remove any inline style attributes or class names
-            dataScripts.forEach((el) => {
-                el.remove()
-            })
+            const idsToRemove = [
+                program.NAME + '-cssGeneral',
+                program.NAME + '-cssSlideOn',
+                program.NAME + '-cssCarouselSlider'
+            ]
+            // Call the function to remove <style> tags from the entire DOM
+            removeStyleTagsWithIDs(idsToRemove)
 
             // Create new needed stuff
             const generalStyle = document.createElement("style")
-            generalStyle.id = "instantgram-cssGeneral"
+            generalStyle.id = program.NAME + "-cssGeneral"
             // Set the innerHTML property to the JavaScript code
             generalStyle.innerHTML = cssGeneral
             // Append the script element to the document
@@ -47,43 +50,18 @@ export class MediaScanner implements Module {
 
             // Switch css
             const switchStyle = document.createElement("style")
-            switchStyle.id = "instantgram-cssSlideOn"
+            switchStyle.id = program.NAME + "-cssSlideOn"
             // Set the innerHTML property to the JavaScript code
             switchStyle.innerHTML = cssSlideOn
             // Append the script element to the document
             document.body.appendChild(switchStyle)
 
             const carouselSliderStyle = document.createElement("style")
-            carouselSliderStyle.id = "instantgram-cssCarouselSlider"
+            carouselSliderStyle.id = program.NAME + "-cssCarouselSlider"
             // Set the innerHTML property to the JavaScript code
             carouselSliderStyle.innerHTML = cssCarouselSlider
             // Append the script element to the document
             document.body.appendChild(carouselSliderStyle)
-
-            // const carouselSliderScript = document.createElement("script")
-            // carouselSliderScript.id = "instantgram-jsCarouselSlider"
-            // // Set the innerHTML property to the JavaScript code
-            // carouselSliderScript.innerHTML = jsCarouselSlider
-            // // Append the script element to the document
-            // document.body.appendChild(carouselSliderScript)
-
-            const dataDownloadScript = document.createElement("script")
-            dataDownloadScript.id = "instantgram-jsDataDownload"
-            // Set the innerHTML property to the JavaScript code
-            dataDownloadScript.innerHTML = `async function toDataURL(url) {
-          const blob = await fetch(url).then(res => res.blob());
-          return URL.createObjectURL(blob);
-      }
-      async function downloadFromHref(url, filename) {
-          const a = document.createElement("a");
-          a.href = await toDataURL(url);
-          a.download = filename;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-      }`
-            // Append the script element to the document
-            document.body.appendChild(dataDownloadScript)
 
             // Handle specific modules
             // Detect profile root path
@@ -91,8 +69,10 @@ export class MediaScanner implements Module {
                 program.foundMediaObj = {
                     found: false,
                     mediaType: undefined,
-                    mediaURL: undefined,
-                    mediaInfo: undefined
+                    mediaInfo: undefined,
+                    modalBody: undefined,
+                    selectedIndex: undefined,
+                    userName: undefined
                 }
                 callback(program)
                 return
@@ -111,7 +91,7 @@ export class MediaScanner implements Module {
 
             // Detect feed posts
             if (program.regexRootPath.test(program.path)) {
-                new FeedScanner().execute(program, function (scannerProgram: Program) {                    
+                new FeedScanner().execute(program, function (scannerProgram: Program) {
                     if (scannerProgram.foundMediaObj.found) {
                         scannerProgram.foundByModule = new FeedScanner().getName()
                     }
@@ -143,12 +123,14 @@ export class MediaScanner implements Module {
             }
             return
         } catch (e) {
-            console.error(this.getName() + "()", `[instantgram-light] ${program.VERSION}`, e)
+            console.error(this.getName() + "()", `[${program.NAME}] ${program.VERSION}`, e)
             program.foundMediaObj = {
                 found: false,
                 mediaType: undefined,
-                mediaURL: undefined,
-                mediaInfo: undefined
+                mediaInfo: undefined,
+                modalBody: undefined,
+                selectedIndex: undefined,
+                userName: undefined
             }
             callback(program)
         }

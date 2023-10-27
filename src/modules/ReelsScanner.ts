@@ -1,10 +1,6 @@
 import { Program } from "../App"
 import { Module } from "./Module"
-import { MediaType } from "../model/mediaType"
-import getElementInViewPercentage from "../helpers/getElementInViewPercentage"
-import generateModalBody from "../helpers/generateModalBody"
-import getReactElement from "../helpers/getReactElement"
-import getUserName from "../helpers/getUserName"
+import { getElementInViewPercentage, generateModalBody } from "../helpers/utils"
 
 export class ReelsScanner implements Module {
     public getName(): string {
@@ -57,11 +53,7 @@ export class ReelsScanner implements Module {
             $article = $articles[objMax.i1]
 
             if (typeof $article !== 'undefined' || $article !== null || $article !== '') {
-                const $reactPostNode = getReactElement($article)
-                const mediaInfo = $reactPostNode?.return?.return?.return?.memoizedProps?.post
-                const userName = getUserName(document, mediaInfo)
-
-                let v = generateModalBody($article, userName, null, program)
+                let v = await generateModalBody($article, program)
                 modalBody += v.modalBody
 
                 program.foundMediaObj = {
@@ -69,18 +61,21 @@ export class ReelsScanner implements Module {
                     mediaType: v.mediaType,
                     mediaInfo: v.mediaInfo,
                     modalBody: modalBody,
-                    selectedIndex: v.selectedIndex
+                    selectedIndex: v.selectedIndex,
+                    userName: v.userName
                 }
             }
 
             callback(program)
         } catch (e) {
-            console.error(this.getName() + "()", `[instantgram] ${program.VERSION}`, e)
+            console.error(this.getName() + "()", `[${program.NAME}] ${program.VERSION}`, e)
             program.foundMediaObj = {
                 found: false,
                 mediaType: undefined,
-                mediaURL: undefined,
-                mediaInfo: undefined
+                mediaInfo: undefined,
+                modalBody: undefined,
+                selectedIndex: undefined,
+                userName: undefined
             }
             callback(program)
         }

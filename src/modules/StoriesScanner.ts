@@ -1,17 +1,15 @@
 import { Program } from "../App"
 import { Module } from "./Module"
-import generateModalBody from "../helpers/generateModalBody"
-import getUserName from "../helpers/getUserName"
+import { generateModalBody } from "../helpers/utils"
 
 export class StoriesScanner implements Module {
     public getName(): string {
         return "StoriesScanner"
     }
 
-    public pauseCurrentStory() {
-        let button = document.querySelector("header > div:nth-child(2) > div:nth-child(2) > div:first-child")
+    public pauseCurrentStory(el: any) {
         // Trigger a click event on the pause button if it exists
-        let svgElement = button.querySelector("svg[viewBox='0 0 48 48']")
+        let svgElement = el.querySelector("svg[viewBox='0 0 48 48']")
         if (svgElement !== null) {
             if (typeof (<HTMLElement>svgElement).click === "function") {
                 (<HTMLElement>svgElement).click()
@@ -21,7 +19,7 @@ export class StoriesScanner implements Module {
                     view: window,
                     bubbles: true,
                     cancelable: true,
-                });
+                })
                 svgElement.dispatchEvent(clickEvent)
             }
         }
@@ -40,14 +38,6 @@ export class StoriesScanner implements Module {
             let $container = document.querySelector("body > div:nth-child(2)")
             // Scanner begins
             if ($container) {
-                const userName = getUserName(document, null)
-
-                // Check requirements are met
-                if (userName == null) {
-                    return
-                }
-                // END
-
                 // Detect right frontend
                 let multipleStoriesCount = $container.querySelector("section > div > div").childElementCount
 
@@ -60,52 +50,66 @@ export class StoriesScanner implements Module {
 
                         if (<any>stories[i].childElementCount > 0 && transformStyle.includes("scale(1)")) {
                             // Pause any playing videos before show modal
-                            this.pauseCurrentStory()
+                            const pauseSettings = localStorage.getItem(program.NAME + '_setting2_checkbox')
+                            if (pauseSettings !== null && pauseSettings !== undefined && pauseSettings === 'true') {
+                                this.pauseCurrentStory(stories[i])
+                            }
 
-                            let v = generateModalBody(stories[i], userName, null, program)
+                            let v = await generateModalBody(stories[i], program)
                             modalBody += v.modalBody
 
                             program.foundMediaObj = {
                                 found: v.found,
                                 mediaType: v.mediaType,
                                 mediaInfo: v.mediaInfo,
-                                modalBody: modalBody
+                                modalBody: modalBody,
+                                selectedIndex: v.selectedIndex,
+                                userName: v.userName
                             }
                             break
                         }
                     }
                 } else {
-                    let story: any = $container.querySelector("section section").parentElement.firstChild
+                    let story: any = $container.querySelectorAll("section")
                     // Pause any playing videos before show modal
-                    this.pauseCurrentStory()
+                    const pauseSettings = localStorage.getItem(program.NAME + '_setting2_checkbox')
+                    if (pauseSettings !== null && pauseSettings !== undefined && pauseSettings === 'true') {
+                        this.pauseCurrentStory(story[0])
+                    }
 
-                    let v = generateModalBody(story, userName, null, program)
+                    let v = await generateModalBody(story, program)
                     modalBody += v.modalBody
 
                     program.foundMediaObj = {
                         found: v.found,
                         mediaType: v.mediaType,
                         mediaInfo: v.mediaInfo,
-                        modalBody: modalBody
+                        modalBody: modalBody,
+                        selectedIndex: v.selectedIndex,
+                        userName: v.userName
                     }
                 }
             } else {
                 program.foundMediaObj = {
                     found: false,
                     mediaType: undefined,
-                    mediaURL: undefined,
-                    mediaInfo: undefined
+                    mediaInfo: undefined,
+                    modalBody: undefined,
+                    selectedIndex: undefined,
+                    userName: undefined
                 }
             }
 
             callback(program)
         } catch (e) {
-            console.error(this.getName() + "()", `[instantgram-light] ${program.VERSION}`, e)
+            console.error(this.getName() + "()", `[${program.NAME}] ${program.VERSION}`, e)
             program.foundMediaObj = {
                 found: false,
                 mediaType: undefined,
-                mediaURL: undefined,
-                mediaInfo: undefined
+                mediaInfo: undefined,
+                modalBody: undefined,
+                selectedIndex: undefined,
+                userName: undefined
             }
             callback(program)
         }

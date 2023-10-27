@@ -3,5 +3,4 @@ interface InstantgramData {
     onlineVersion: string
     lastVerification: number
     dateExpiration: number
-    settings: [{ name: string; value: any }, ...any[]]
 }

@@ -36,6 +36,7 @@ This is a lite version which supports browsers like firefox with 65kb bookmarkle
 Read [CONTRIBUTING.md](CONTRIBUTING.md) for more information. :heart:
 
 ## Changelog
+- v2023.10.27 - [instangram-light] Large parts were rewritten. Added profile page avatar download, open any profile url and execute instantgram.
 - v2023.07.12 - [instangram-light] Fixed storys if [instantgram] was triggered the currently displayed story stopps playback and continues after the modal was closed.
 - v2023.07.07 - [instangram-light] Fixed instantgram doesnt do anything.
 - v2023.07.06 - [instangram-light] Fixed instantgram doesnt do anything.

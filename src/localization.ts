@@ -9,10 +9,12 @@ export default {
             'index@alert_dontFound': 'Did you open any Instagram post? Like for example<br/><div style="text-align:center"><a href="https://www.instagram.com/p/CIGrv1VMBkS/" target="_blank" onMouseOver="this.style.textDecoration=\'underline\'" onMouseOut="this.style.textDecoration=\'initial\'">https://www.instagram.com/p/CIGrv1VMBkS/</a></div>',
 
             'index#program#modal_settings@title': 'Settings',
-            'index#program#modal_settings@settings_attention': 'Attention you need to re-open instantgram to apply these changes!',
-            'index#program#modal_settings@settings_1': 'Enable monetized posts<br>(Requires ad blockers to be disabled)',
-            'index#program#modal_settings@settings_2': 'Change the filename format for downloads.<br/>The default format is as follows',
-            'index#program#modal_settings@settings_2_1': 'You can change completely without using the above placeholders, or you can customize them by adding dashes, underscores, and dots.',
+            'index#program#modal_settings@settings_attention': 'Attention: You have to open [instantgram-light] again for your changes to be active!',
+            'index#program#modal_settings@settings_1': 'Enable monetized posts<br>(ad blockers must be disabled)',
+            'index#program#modal_settings@settings_2': 'Stories pause when opening [instantgram-light]',
+            'index#program#modal_settings@settings_3': 'Open download in new tab',
+            'index#program#modal_settings@settings_4': 'Change the file name format for downloads.<br/>The default format is as follows.',
+            'index#program#modal_settings@settings_4_1': 'You can omit the above placeholders completely or customize them by adding hyphens, underscores, and periods.',
 
             'index@download': 'Download',
             'index@save': 'Save',
@@ -35,10 +37,12 @@ export default {
             'index@alert_dontFound': '¿Has abierto algún post de Instagram? Como por ejemplo<br/><div style="text-align:center"><a href="https://www.instagram.com/p/CIGrv1VMBkS/" target="_blank" onMouseOver="this.style.textDecoration=\'underline\'" onMouseOut="this.style.textDecoration=\'initial\'">https://www.instagram.com/p/CIGrv1VMBkS/</a></div>',
 
             'index#program#modal_settings@title': 'Ajustes',
-            'index#program#modal_settings@settings_attention': '¡Atención, debe volver a abrir Instantgram para aplicar estos cambios!',
-            'index#program#modal_settings@settings_1': 'Habilitar publicaciones monetizadas<br>(requiere que los bloqueadores de anuncios estén deshabilitados)',
-            'index#program#modal_settings@settings_2': 'Cambie el formato del nombre de archivo para las descargas.<br/>El formato predeterminado es el siguiente',
-            'index#program#modal_settings@settings_2_1': 'Puede cambiar completamente sin usar los marcadores de posición anteriores, o puede personalizarlos agregando guiones, guiones bajos y puntos.',
+            'index#program#modal_settings@settings_attention': 'Atención: ¡Tienes que abrir [instantgram-light] nuevamente para que los cambios estén activos!',
+            'index#program#modal_settings@settings_1': 'Habilitar publicaciones monetizadas<br>(los bloqueadores de anuncios deben estar deshabilitados)',
+            'index#program#modal_settings@settings_2': 'Historias en pausa al abrir [instantgram-light]',
+            'index#program#modal_settings@settings_3': 'Abrir la descarga en una nueva pestaña',
+            'index#program#modal_settings@settings_4': 'Cambie el formato del nombre de archivo para las descargas.<br/>El formato predeterminado es el siguiente',
+            'index#program#modal_settings@settings_4_1': 'Puede omitir por completo los marcadores de posición anteriores o personalizarlos agregando guiones, guiones bajos y puntos.',
 
             'index@download': 'Descargar',
             'index@save': 'Ahorrar',
@@ -61,10 +65,12 @@ export default {
             'index@alert_dontFound': 'Hast du einen Instagram Post geöffnet? Zum Beispiel<br/><div style="text-align:center"><a href="https://www.instagram.com/p/CIGrv1VMBkS/" target="_blank" onMouseOver="this.style.textDecoration=\'underline\'" onMouseOut="this.style.textDecoration=\'initial\'">https://www.instagram.com/p/CIGrv1VMBkS/</a></div>',
 
             'index#program#modal_settings@title': 'Einstellungen',
-            'index#program#modal_settings@settings_attention': 'Achtung: Sie müssen Instantgram erneut öffnen, um diese Änderungen zu übernehmen!',
+            'index#program#modal_settings@settings_attention': 'Achtung: Sie müssen [instantgram-light] erneut öffnen, damit ihre Änderungen aktiv sind!',
             'index#program#modal_settings@settings_1': 'Monetarisierte Beiträge aktivieren<br>(Werbeblocker müssen deaktiviert sein)',
-            'index#program#modal_settings@settings_2': 'Ändern Sie das Dateinamenformat für Downloads.<br/>Das Standardformat ist wie folgt',
-            'index#program#modal_settings@settings_2_1': 'Sie können die obigen Platzhalter komplett weglassen oder sie durch Hinzufügen von Bindestrichen, Unterstrichen und Punkten anpassen.',
+            'index#program#modal_settings@settings_2': 'Stories pausieren beim öffnen von [instantgram-light]',
+            'index#program#modal_settings@settings_3': 'Download in neuem Tab öffnen',
+            'index#program#modal_settings@settings_4': 'Ändern Sie das Dateinamenformat für Downloads.<br/>Das Standardformat ist wie folgt',
+            'index#program#modal_settings@settings_4_1': 'Sie können die obigen Platzhalter komplett weglassen oder sie durch Hinzufügen von Bindestrichen, Unterstrichen und Punkten anpassen.',
 
             'index@download': 'Herunterladen',
             'index@save': 'Speichern',
@@ -87,10 +93,12 @@ export default {
             'index@alert_dontFound': 'ops, você está em algum post do instagram? ex:<br/><div style="text-align:center"><a href="https://www.instagram.com/p/CIGrv1VMBkS/" target="_blank" onMouseOver="this.style.textDecoration=\'underline\'" onMouseOut="this.style.textDecoration=\'initial\'">https://www.instagram.com/p/CIGrv1VMBkS/</a></div>',
 
             'index#program#modal_settings@title': 'Configurações',
-            'index#program#modal_settings@settings_attention': 'Atenção, você precisa reabrir o Instantgram para aplicar essas alterações!',
-            'index#program#modal_settings@settings_1': 'Ativar postagens monetizadas<br>(requer que os bloqueadores de anúncios sejam desativados)',
-            'index#program#modal_settings@settings_2': 'Altere o formato do nome de arquivo para downloads.<br/>O formato padrão é o seguinte',
-            'index#program#modal_settings@settings_2_1': 'Você pode mudar completamente sem usar os espaços reservados acima ou pode personalizá-los adicionando traços, sublinhados e pontos.',
+            'index#program#modal_settings@settings_attention': 'Atenção: Você precisa abrir o [instantgram-light] novamente para que suas alterações sejam ativadas!',
+            'index#program#modal_settings@settings_1': 'Habilitar postagens monetizadas<br>(os bloqueadores de anúncios devem estar desativados)',
+            'index#program#modal_settings@settings_2': 'As histórias fazem uma pausa ao abrir [instantgram-light]',
+            'index#program#modal_settings@settings_3': 'Abrir o download em uma nova guia',
+            'index#program#modal_settings@settings_4': 'Altere o formato do nome do arquivo para downloads.<br/>O formato padrão é o seguinte',
+            'index#program#modal_settings@settings_4_1': 'Você pode omitir completamente os espaços reservados acima ou ajustá-los adicionando hífens, sublinhados e pontos.',
 
             'index@download': 'Download',
             'index@save': 'Salvar',
@@ -105,4 +113,4 @@ export default {
             'modules.update@determineIfGetUpdateIsNecessary_@load_update': 'Carga de actualização'
         }
     }
-};
+}
