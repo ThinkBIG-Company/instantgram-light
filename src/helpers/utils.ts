@@ -109,11 +109,6 @@ export async function generateModalBody(el: any, program: Program) {
         console.log("Failed to fetch user information")
     }
 
-    if ("carousel_media" in mediaInfo) {
-        // multi-media post
-        mediaInfo = mediaInfo.carousel_media[0]
-    }
-
     let url: string | null = null
 
     // Check if is an ad
@@ -145,7 +140,7 @@ export async function generateModalBody(el: any, program: Program) {
         openInNewTab = storedSetting3Checkbox === "true"
     }
 
-    if (mediaInfo.length > 1) {
+    if ("carousel_media" in mediaInfo) {
         found = true
         mediaType = MediaType.Carousel
 
@@ -161,8 +156,8 @@ export async function generateModalBody(el: any, program: Program) {
 
         modalBody += `<div class="slider-container"><div class="slider">`
 
-        for (let sC = 0; sC < mediaInfo?.length; sC++) {
-            const scMedia = mediaInfo[sC]
+        for (let sC = 0; sC < mediaInfo?.carousel_media?.length; sC++) {
+            const scMedia = mediaInfo.carousel_media[sC]
 
             if (typeof scMedia.video_dash_manifest !== "undefined" && scMedia.video_dash_manifest !== null) {
                 url = getImgOrVedioUrl(scMedia)

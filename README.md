@@ -1,5 +1,5 @@
-# <img style="float: left; vertical-align: bottom; " width="35" src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg"> [instantgram-light] v2023.10.27 :smiling_face_with_three_hearts: Light version
-![GitHub release](https://img.shields.io/badge/release-v2023.10.27-green)
+# <img style="float: left; vertical-align: bottom; " width="35" src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg"> [instantgram-light] v2023.10.28 :smiling_face_with_three_hearts: Light version
+![GitHub release](https://img.shields.io/badge/release-v2023.10.28-green)
 
 ![badge](https://img.shields.io/badge/for-instagram-yellow.svg?style=flat-square)
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com/)
@@ -36,6 +36,7 @@ This is a lite version which supports browsers like firefox with 65kb bookmarkle
 Read [CONTRIBUTING.md](CONTRIBUTING.md) for more information. :heart:
 
 ## Changelog
+- v2023.10.28 - [instangram-light] Large parts were rewritten. Added profile page avatar download, open any profile url and execute instantgram. FIXED Carousels not working.
 - v2023.10.27 - [instangram-light] Large parts were rewritten. Added profile page avatar download, open any profile url and execute instantgram.
 - v2023.07.12 - [instangram-light] Fixed storys if [instantgram] was triggered the currently displayed story stopps playback and continues after the modal was closed.
 - v2023.07.07 - [instangram-light] Fixed instantgram doesnt do anything.
