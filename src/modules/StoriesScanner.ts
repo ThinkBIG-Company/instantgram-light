@@ -35,7 +35,7 @@ export class StoriesScanner implements Module {
             let modalBody = ""
 
             // Container
-            let $container = document.querySelector("body > div:nth-child(2)")
+            let $container = document.querySelector("body > div:nth-child(3)")
             // Scanner begins
             if ($container) {
                 // Detect right frontend
