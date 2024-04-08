@@ -254,20 +254,6 @@ export class Modal {
     this.modal.classList.remove(program.NAME + '-modal-visible')
     this.modal.parentNode.removeChild(this.modal)
     this.modal = null
-
-    // Remove previous executed bookmarklet stuff
-    const idsToRemove = [
-      program.NAME + '-cssGeneral',
-      program.NAME + '-cssSlideOn',
-      program.NAME + '-cssCarouselSlider'
-    ]
-    // Remove <style> tags from the entire DOM
-    const styleTags = document.querySelectorAll("style[id]")
-    styleTags.forEach(styleTag => {
-      if (idsToRemove.includes(styleTag.id)) {
-        styleTag.parentNode.removeChild(styleTag)
-      }
-    })
   }
 
   public async refresh(): Promise<void> {

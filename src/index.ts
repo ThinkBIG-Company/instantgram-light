@@ -181,9 +181,7 @@ function handleMediaFound(document: any, userName: any) {
                 const slider = (<any>el).querySelector(".slider")
                 const slides = el.querySelectorAll(".slide")
                 const sliderControls = el.querySelector(".slider-controls")
-                let sliderIndex = program.foundMediaObj.selectedSliderIndex
-                console.log(sliderIndex);
-                
+                let sliderIndex = program.foundMediaObj.selectedSliderIndex                
 
                 for (let i = 0; i < slides.length; i++) {
                     const button = document.createElement("button")
