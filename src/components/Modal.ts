@@ -103,7 +103,7 @@ export class Modal {
 .${program.NAME}-modal-body input {
   color: black!important;
 }
-.${program.NAME}-modal-body button {
+.${program.NAME}-modal-body button:not([data-index]) {
   border-top-left-radius:0!important;
   border-bottom-left-radius:0!important;
 }`
@@ -235,12 +235,12 @@ export class Modal {
     document.body.appendChild(this.modal)
     this.modal.classList.add(program.NAME + '-modal-visible')
     setTimeout(() => {
-      this.modal!.classList.add(program.NAME + '-modal-show')
+      this.modal.classList.add(program.NAME + '-modal-show')
     })
 
     // Re-trigger the callback function if it exists
     if (this?.callback) {
-      this.callback(this, this.modal!)
+      this.callback(this, this.modal)
     }
   }
 
@@ -254,6 +254,20 @@ export class Modal {
     this.modal.classList.remove(program.NAME + '-modal-visible')
     this.modal.parentNode.removeChild(this.modal)
     this.modal = null
+
+    // Remove previous executed bookmarklet stuff
+    const idsToRemove = [
+      program.NAME + '-cssGeneral',
+      program.NAME + '-cssSlideOn',
+      program.NAME + '-cssCarouselSlider'
+    ]
+    // Remove <style> tags from the entire DOM
+    const styleTags = document.querySelectorAll("style[id]")
+    styleTags.forEach(styleTag => {
+      if (idsToRemove.includes(styleTag.id)) {
+        styleTag.parentNode.removeChild(styleTag)
+      }
+    })
   }
 
   public async refresh(): Promise<void> {
@@ -265,7 +279,7 @@ export class Modal {
 
     // Re-trigger the callback function if it exists
     if (this?.callback) {
-      this.callback(this, this.modal!.querySelector('.' + program.NAME + '-modal-body')!)
+      this.callback(this, this.modal.querySelector('.' + program.NAME + '-modal-body')!)
     }
   }
 }

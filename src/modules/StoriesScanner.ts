@@ -7,7 +7,7 @@ export class StoriesScanner implements Module {
         return "StoriesScanner"
     }
 
-    public pauseCurrentStory(el: any) {
+    public pausePlayCurrentStory(el: any) {
         // Trigger a click event on the pause button if it exists
         let svgElement = el.querySelector("svg[viewBox='0 0 48 48']")
         if (svgElement !== null) {
@@ -35,7 +35,12 @@ export class StoriesScanner implements Module {
             let modalBody = ""
 
             // Container
-            let $container = document.querySelector("body > div:nth-child(3)")
+            let $container = document.querySelector("body > div:nth-child(5)")
+
+            if (process.env.DEV) {
+                console.info(["$container", $container])
+            }
+
             // Scanner begins
             if ($container) {
                 // Detect right frontend
@@ -52,7 +57,7 @@ export class StoriesScanner implements Module {
                             // Pause any playing videos before show modal
                             const pauseSettings = localStorage.getItem(program.NAME + '_setting2_checkbox')
                             if (pauseSettings !== null && pauseSettings !== undefined && pauseSettings === 'true') {
-                                this.pauseCurrentStory(stories[i])
+                                this.pausePlayCurrentStory(stories[i])
                             }
 
                             let v = await generateModalBody(stories[i], program)
@@ -63,7 +68,7 @@ export class StoriesScanner implements Module {
                                 mediaType: v.mediaType,
                                 mediaInfo: v.mediaInfo,
                                 modalBody: modalBody,
-                                selectedIndex: v.selectedIndex,
+                                selectedSliderIndex: v.selectedSliderIndex,
                                 userName: v.userName
                             }
                             break
@@ -74,7 +79,7 @@ export class StoriesScanner implements Module {
                     // Pause any playing videos before show modal
                     const pauseSettings = localStorage.getItem(program.NAME + '_setting2_checkbox')
                     if (pauseSettings !== null && pauseSettings !== undefined && pauseSettings === 'true') {
-                        this.pauseCurrentStory(story[0])
+                        this.pausePlayCurrentStory(story[0])
                     }
 
                     let v = await generateModalBody(story, program)
@@ -85,7 +90,7 @@ export class StoriesScanner implements Module {
                         mediaType: v.mediaType,
                         mediaInfo: v.mediaInfo,
                         modalBody: modalBody,
-                        selectedIndex: v.selectedIndex,
+                        selectedSliderIndex: v.selectedSliderIndex,
                         userName: v.userName
                     }
                 }
@@ -95,7 +100,7 @@ export class StoriesScanner implements Module {
                     mediaType: undefined,
                     mediaInfo: undefined,
                     modalBody: undefined,
-                    selectedIndex: undefined,
+                    selectedSliderIndex: undefined,
                     userName: undefined
                 }
             }
@@ -108,7 +113,7 @@ export class StoriesScanner implements Module {
                 mediaType: undefined,
                 mediaInfo: undefined,
                 modalBody: undefined,
-                selectedIndex: undefined,
+                selectedSliderIndex: undefined,
                 userName: undefined
             }
             callback(program)

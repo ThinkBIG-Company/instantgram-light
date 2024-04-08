@@ -53,7 +53,7 @@ export class FeedScanner implements Module {
                     mediaType: v.mediaType,
                     mediaInfo: v.mediaInfo,
                     modalBody: v.modalBody,
-                    selectedIndex: v.selectedIndex,
+                    selectedSliderIndex: v.selectedSliderIndex,
                     userName: v.userName
                 }
             }
@@ -67,7 +67,7 @@ export class FeedScanner implements Module {
                 mediaType: undefined,
                 mediaInfo: undefined,
                 modalBody: undefined,
-                selectedIndex: undefined,
+                selectedSliderIndex: undefined,
                 userName: undefined
             }
             callback(program)

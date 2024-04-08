@@ -71,7 +71,7 @@ export class MediaScanner implements Module {
                     mediaType: undefined,
                     mediaInfo: undefined,
                     modalBody: undefined,
-                    selectedIndex: undefined,
+                    selectedSliderIndex: undefined,
                     userName: undefined
                 }
                 callback(program)
@@ -129,7 +129,7 @@ export class MediaScanner implements Module {
                 mediaType: undefined,
                 mediaInfo: undefined,
                 modalBody: undefined,
-                selectedIndex: undefined,
+                selectedSliderIndex: undefined,
                 userName: undefined
             }
             callback(program)

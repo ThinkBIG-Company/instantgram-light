@@ -61,7 +61,7 @@ export class ReelsScanner implements Module {
                     mediaType: v.mediaType,
                     mediaInfo: v.mediaInfo,
                     modalBody: modalBody,
-                    selectedIndex: v.selectedIndex,
+                    selectedSliderIndex: v.selectedSliderIndex,
                     userName: v.userName
                 }
             }
@@ -74,7 +74,7 @@ export class ReelsScanner implements Module {
                 mediaType: undefined,
                 mediaInfo: undefined,
                 modalBody: undefined,
-                selectedIndex: undefined,
+                selectedSliderIndex: undefined,
                 userName: undefined
             }
             callback(program)

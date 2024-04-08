@@ -6,7 +6,7 @@ export default {
             'index@alert_onlyWorks': 'Works only on instagram.com',
             'index@profilepage_downloader_disabled': 'Sorry the ProfilePage downloader is currently disabled because instagram changed their system.\n\nMaybe in the future there will be a solution to fix the problem.',
 
-            'index@alert_dontFound': 'Did you open any Instagram post? Like for example<br/><div style="text-align:center"><a href="https://www.instagram.com/p/CIGrv1VMBkS/" target="_blank" onMouseOver="this.style.textDecoration=\'underline\'" onMouseOut="this.style.textDecoration=\'initial\'">https://www.instagram.com/p/CIGrv1VMBkS/</a></div>',
+            'index@alert_dontFound': 'Did you open any Instagram post? Like for example<br/><div style="text-align:center"><a style="color:black" href="https://www.instagram.com/p/CIGrv1VMBkS/" target="_blank">https://www.instagram.com/p/CIGrv1VMBkS/</a></div>',
 
             'index#program#modal_settings@title': 'Settings',
             'index#program#modal_settings@settings_attention': 'Attention: You have to open [instantgram-light] again for your changes to be active!',
@@ -34,7 +34,7 @@ export default {
             'index@alert_onlyWorks': 'Sólo funciona en instagram.com',
             'index@profilepage_downloader_disabled': 'Lo siento, la descarga de ProfilePage está deshabilitada actualmente porque Instagram cambió su sistema.\n\nTal vez en el futuro haya una solución para solucionar el problema.',
 
-            'index@alert_dontFound': '¿Has abierto algún post de Instagram? Como por ejemplo<br/><div style="text-align:center"><a href="https://www.instagram.com/p/CIGrv1VMBkS/" target="_blank" onMouseOver="this.style.textDecoration=\'underline\'" onMouseOut="this.style.textDecoration=\'initial\'">https://www.instagram.com/p/CIGrv1VMBkS/</a></div>',
+            'index@alert_dontFound': '¿Has abierto algún post de Instagram? Como por ejemplo<br/><div style="text-align:center"><a style="color:black" href="https://www.instagram.com/p/CIGrv1VMBkS/" target="_blank">https://www.instagram.com/p/CIGrv1VMBkS/</a></div>',
 
             'index#program#modal_settings@title': 'Ajustes',
             'index#program#modal_settings@settings_attention': 'Atención: ¡Tienes que abrir [instantgram-light] nuevamente para que los cambios estén activos!',
@@ -62,7 +62,7 @@ export default {
             'index@alert_onlyWorks': 'Funktioniert nur auf instagram.com',
             'index@profilepage_downloader_disabled': 'Leider ist der ProfilePage-Downloader derzeit deaktiviert, da Instagram sein System geändert hat.\n\nVielleicht gibt es in Zukunft eine Lösung für dieses Problem.',
 
-            'index@alert_dontFound': 'Hast du einen Instagram Post geöffnet? Zum Beispiel<br/><div style="text-align:center"><a href="https://www.instagram.com/p/CIGrv1VMBkS/" target="_blank" onMouseOver="this.style.textDecoration=\'underline\'" onMouseOut="this.style.textDecoration=\'initial\'">https://www.instagram.com/p/CIGrv1VMBkS/</a></div>',
+            'index@alert_dontFound': 'Hast du einen Instagram Post geöffnet? Zum Beispiel<br/><div style="text-align:center"><a style="color:black" href="https://www.instagram.com/p/CIGrv1VMBkS/" target="_blank">https://www.instagram.com/p/CIGrv1VMBkS/</a></div>',
 
             'index#program#modal_settings@title': 'Einstellungen',
             'index#program#modal_settings@settings_attention': 'Achtung: Sie müssen [instantgram-light] erneut öffnen, damit ihre Änderungen aktiv sind!',
@@ -90,7 +90,7 @@ export default {
             'index@alert_onlyWorks': '[instantgram-light] somente funciona no instagram.com',
             'index@profilepage_downloader_disabled': 'Lamentamos que o programa de download ProfilePage esteja atualmente desativado porque o programa mudou seu sistema.\n\nTalvez, no futuro, haja uma solução para resolver o problema.',
 
-            'index@alert_dontFound': 'ops, você está em algum post do instagram? ex:<br/><div style="text-align:center"><a href="https://www.instagram.com/p/CIGrv1VMBkS/" target="_blank" onMouseOver="this.style.textDecoration=\'underline\'" onMouseOut="this.style.textDecoration=\'initial\'">https://www.instagram.com/p/CIGrv1VMBkS/</a></div>',
+            'index@alert_dontFound': 'ops, você está em algum post do instagram? ex:<br/><div style="text-align:center"><a style="color:black" href="https://www.instagram.com/p/CIGrv1VMBkS/" target="_blank">https://www.instagram.com/p/CIGrv1VMBkS/</a></div>',
 
             'index#program#modal_settings@title': 'Configurações',
             'index#program#modal_settings@settings_attention': 'Atenção: Você precisa abrir o [instantgram-light] novamente para que suas alterações sejam ativadas!',

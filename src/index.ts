@@ -39,24 +39,6 @@ if (process.env.DEV) {
     }
 }
 
-function playCurrentStory(el: any) {
-    // Trigger a click event on the play button if it exists
-    let svgElement = el.querySelector("svg[viewBox='0 0 24 24']")
-    if (svgElement !== null) {
-        if (typeof (<HTMLElement>svgElement).click === "function") {
-            (<HTMLElement>svgElement).click()
-        } else {
-            // Alternative approach for older browsers
-            const clickEvent = new MouseEvent("click", {
-                view: window,
-                bubbles: true,
-                cancelable: true,
-            })
-            svgElement.dispatchEvent(clickEvent)
-        }
-    }
-}
-
 function initSaveSettings(el: any) {
     for (let i = 1; i <= 3; i++) {
         const settingName = `setting${i}`
@@ -147,7 +129,7 @@ async function handleProfilePage() {
                 mediaType: MediaType.Image,
                 mediaInfo: undefined,
                 modalBody: modalBody,
-                selectedIndex: undefined,
+                selectedSliderIndex: undefined,
                 userName: username
             }
             handleMediaFound(document, username)
@@ -199,14 +181,16 @@ function handleMediaFound(document: any, userName: any) {
                 const slider = (<any>el).querySelector(".slider")
                 const slides = el.querySelectorAll(".slide")
                 const sliderControls = el.querySelector(".slider-controls")
-                let slideIndex = program.foundMediaObj.selectedIndex
+                let sliderIndex = program.foundMediaObj.selectedSliderIndex
+                console.log(sliderIndex);
+                
 
                 for (let i = 0; i < slides.length; i++) {
                     const button = document.createElement("button")
                     button.setAttribute("data-index", String(i))
                     button.innerHTML = String(i + 1)
                     button.addEventListener("click", () => {
-                        slideIndex = i
+                        sliderIndex = i
                         updateSliderPosition()
                     })
                     sliderControls.appendChild(button)
@@ -216,14 +200,14 @@ function handleMediaFound(document: any, userName: any) {
 
                 function updateSliderPosition() {
                     const slideWidth = slides[0].clientWidth
-                    const translateX = -slideWidth * slideIndex
+                    const translateX = -slideWidth * sliderIndex
                     slider.style.transform = `translateX(${translateX}px)`
                     buttons.forEach((button, index) => {
-                        button.classList.toggle("active", index === slideIndex)
+                        button.classList.toggle("active", index === sliderIndex)
                     })
                 }
 
-                buttons[slideIndex].classList.add("active")
+                buttons[sliderIndex].classList.add("active")
                 updateSliderPosition()
             }
 

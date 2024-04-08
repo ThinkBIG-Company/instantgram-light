@@ -100,7 +100,7 @@ export async function generateModalBody(el: any, program: Program) {
     mediaInfo = await getMediaFromInfoApi(el)
 
     let modalBody = ""
-    let selectedIndex: number = 0
+    let selectedSliderIndex: number = 0
 
     let userName = undefined
     if (mediaInfo && mediaInfo.user && mediaInfo.user.username) {
@@ -115,7 +115,7 @@ export async function generateModalBody(el: any, program: Program) {
     const storedSetting1Checkbox = localStorage.getItem(program.NAME + "_setting1_checkbox") || "false"
     if (storedSetting1Checkbox !== null && storedSetting1Checkbox !== undefined && storedSetting1Checkbox === "false" && mediaInfo.product_type == "ad") {
         mediaType = MediaType.Ad
-        return { found, mediaType, mediaInfo, modalBody, selectedIndex, userName }
+        return { found, mediaType, mediaInfo, modalBody, selectedSliderIndex, userName }
     }
 
     const mediaPostedAtDateObj = new Date(mediaInfo.taken_at * 1000)
@@ -149,10 +149,10 @@ export async function generateModalBody(el: any, program: Program) {
         if (isPostView) {
             dotsList = el.querySelectorAll(`:scope > div > div > div > div:nth-child(2)>div`)
         } else {
-            dotsList = el.querySelectorAll(`:scope > div > div:nth-child(2) > div >div>div> div>div:nth-child(2)>div`)
-        }
+            dotsList = el.querySelectorAll(`:scope > div > div:nth-child(2) >div>div>div>div>div> div:nth-child(2)>div`)
+        }        
 
-        selectedIndex = [...dotsList].findIndex((i) => i.classList.length === 2)
+        selectedSliderIndex = [...dotsList].findIndex((i) => i.classList.length === 2)
 
         modalBody += `<div class="slider-container"><div class="slider">`
 
@@ -245,7 +245,7 @@ export async function generateModalBody(el: any, program: Program) {
         }
     }
 
-    return { found, mediaType, mediaInfo, modalBody, selectedIndex, userName }
+    return { found, mediaType, mediaInfo, modalBody, selectedSliderIndex, userName }
 }
 
 export function getElementInViewPercentage(el: Element): any {
