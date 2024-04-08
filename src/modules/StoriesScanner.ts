@@ -55,7 +55,7 @@ export class StoriesScanner implements Module {
 
                         if (<any>stories[i].childElementCount > 0 && transformStyle.includes("scale(1)")) {
                             // Pause any playing videos before show modal
-                            const pauseSettings = localStorage.getItem(program.NAME + '_setting2_checkbox')
+                            const pauseSettings = localStorage.getItem(program.STORAGE_NAME + '_setting2_checkbox')
                             if (pauseSettings !== null && pauseSettings !== undefined && pauseSettings === 'true') {
                                 this.pausePlayCurrentStory(stories[i])
                             }
@@ -77,7 +77,7 @@ export class StoriesScanner implements Module {
                 } else {
                     let story: any = $container.querySelectorAll("section")
                     // Pause any playing videos before show modal
-                    const pauseSettings = localStorage.getItem(program.NAME + '_setting2_checkbox')
+                    const pauseSettings = localStorage.getItem(program.STORAGE_NAME + '_setting2_checkbox')
                     if (pauseSettings !== null && pauseSettings !== undefined && pauseSettings === 'true') {
                         this.pausePlayCurrentStory(story[0])
                     }

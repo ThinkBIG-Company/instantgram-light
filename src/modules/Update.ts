@@ -12,14 +12,14 @@ function informOutdatedVersionInDevConsole(data: InstantgramData): void {
 }
 
 function determineIfGetUpdateIsNecessary(localVersion: string): boolean {
-    const data = window.localStorage.getItem(`${program.NAME}`) as string
+    const data = window.localStorage.getItem(`${program.STORAGE_NAME}`) as string
 
     if (typeof data === 'string') {
         const _data = JSON.parse(data) as InstantgramData
 
         // Sync installed version with localStorage
         window.localStorage.setItem(
-            `${program.NAME}`,
+            `${program.STORAGE_NAME}`,
             JSON.stringify({
                 version: localVersion,
                 onlineVersion: _data.onlineVersion,
@@ -75,7 +75,7 @@ async function update(localVersion: string): Promise<void> {
         limitDate.setTime(limitDate.getTime() + 6 * 60 * 60 * 1000)
 
         window.localStorage.setItem(
-            `${program.NAME}`,
+            `${program.STORAGE_NAME}`,
             JSON.stringify({
                 version: localVersion,
                 onlineVersion,
@@ -99,7 +99,7 @@ async function update(localVersion: string): Promise<void> {
                     `
                 ],
                 body: [
-                    `<div style='display: block;border: 2px solid rgb(0 0 0 / 70%);border-left: none;border-right: none;border-top: none;padding: 5px;font-variant: small-caps;font-weight: 900;font-size: 16px;'>Es ist ein neues Update verfügbar <span style='float:right'>v${onlineVersion}</span></div><div style='text-align:left'><h2 style='font-weight: bold;'><br>Changelog</h2>${ul}</div><a href='http://thinkbig-company.github.io/${program.NAME}' target='_blank' onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='initial'" style='display: block; text-align: center;text-decoration: initial; margin: 0px auto; padding: 10px; color: black; border-style: solid; border-image-slice: 1; border-width: 3px; border-image-source: linear-gradient(to left, rgb(213, 58, 157), rgb(116, 58, 213));'>${localize('modules.update@determineIfGetUpdateIsNecessary_@load_update')}</a>`,
+                    `<div style='display: block;border: 2px solid rgb(0 0 0 / 70%);border-left: none;border-right: none;border-top: none;padding: 5px;font-variant: small-caps;font-weight: 900;font-size: 16px;'>Es ist ein neues Update verfügbar <span style='float:right'>v${onlineVersion}</span></div><div style='text-align:left'><h2 style='color:black!important;font-weight:bold!important;'><br>Changelog</h2>${ul}</div><a href='http://thinkbig-company.github.io/${program.NAME}' target='_blank' style='display: block; text-align: center;text-decoration: initial; margin: 0px auto; padding: 10px; color: black; border-style: solid; border-image-slice: 1; border-width: 3px; border-image-source: linear-gradient(to left, rgb(213, 58, 157), rgb(116, 58, 213));'>${localize('modules.update@determineIfGetUpdateIsNecessary_@load_update')}</a>`,
                 ],
                 buttonList: [
                     {
@@ -109,10 +109,10 @@ async function update(localVersion: string): Promise<void> {
                 ],
             }).open()
 
-            const data = JSON.parse(window.localStorage.getItem(`${program.NAME}`) as string)
+            const data = JSON.parse(window.localStorage.getItem(`${program.STORAGE_NAME}`) as string)
             informOutdatedVersionInDevConsole(data)
         } else {
-            console.info(window.localStorage.getItem(`${program.NAME}`))
+            console.info(window.localStorage.getItem(`${program.STORAGE_NAME}`))
         }
     }
 }

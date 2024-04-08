@@ -112,7 +112,7 @@ export async function generateModalBody(el: any, program: Program) {
     let url: string | null = null
 
     // Check if is an ad
-    const storedSetting1Checkbox = localStorage.getItem(program.NAME + "_setting1_checkbox") || "false"
+    const storedSetting1Checkbox = localStorage.getItem(program.STORAGE_NAME + "_setting1_checkbox") || "false"
     if (storedSetting1Checkbox !== null && storedSetting1Checkbox !== undefined && storedSetting1Checkbox === "false" && mediaInfo.product_type == "ad") {
         mediaType = MediaType.Ad
         return { found, mediaType, mediaInfo, modalBody, selectedSliderIndex, userName }
@@ -121,7 +121,7 @@ export async function generateModalBody(el: any, program: Program) {
     const mediaPostedAtDateObj = new Date(mediaInfo.taken_at * 1000)
 
     let formattedFilename = "{Username}__{Year}-{Month}-{Day}--{Hour}-{Minute}"
-    const storedSetting1Input = localStorage.getItem(program.NAME + "_setting1_input") || formattedFilename
+    const storedSetting1Input = localStorage.getItem(program.STORAGE_NAME + "_setting1_input") || formattedFilename
     if (storedSetting1Input !== null && storedSetting1Input !== undefined) {
         const fRegexPlaceholders = {
             Minute: mediaPostedAtDateObj.getMinutes().toString().padStart(2, "0"),
@@ -135,7 +135,7 @@ export async function generateModalBody(el: any, program: Program) {
     }
 
     let openInNewTab = false
-    const storedSetting3Checkbox = localStorage.getItem(program.NAME + "_setting3_checkbox") || "false"
+    const storedSetting3Checkbox = localStorage.getItem(program.STORAGE_NAME + "_setting3_checkbox") || "false"
     if (storedSetting3Checkbox !== null && storedSetting3Checkbox !== undefined) {
         openInNewTab = storedSetting3Checkbox === "true"
     }

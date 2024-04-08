@@ -9,12 +9,13 @@ import { MediaType } from "./model/mediaType"
 
 console.clear()
 
-const APP_NAME = "instantgram_light"
+const APP_NAME = "instantgram-light"
 // Init browser detection
 const browser = detect()
 
 export const program: Program = {
     NAME: APP_NAME,
+    STORAGE_NAME: APP_NAME.toLocaleLowerCase().replace(/-/g, '_'),
     VERSION: process.env.VERSION as string,
     browser: browser,
     hostname: window.location.hostname,
@@ -45,33 +46,33 @@ function initSaveSettings(el: any) {
         // For checkboxes
         const checkbox = el.querySelector(`#${settingName}-checkbox`) as HTMLInputElement
         if (checkbox) {
-            const storedData = localStorage.getItem(program.NAME + '_' + settingName + '_checkbox')
+            const storedData = localStorage.getItem(program.STORAGE_NAME + '_' + settingName + '_checkbox')
             checkbox.checked = storedData === 'true'
 
             checkbox.addEventListener("change", () => {
-                const storedData = localStorage.getItem(program.NAME + '_' + settingName + '_checkbox')
+                const storedData = localStorage.getItem(program.STORAGE_NAME + '_' + settingName + '_checkbox')
                 const checked = String(checkbox.checked)
 
                 // Save merged settings to LocalStorage
-                localStorage.setItem(program.NAME + '_' + settingName + '_checkbox', checked)
+                localStorage.setItem(program.STORAGE_NAME + '_' + settingName + '_checkbox', checked)
             })
         }
 
         // For input text
         const inputText = el.querySelector(`#${settingName}-input`) as HTMLInputElement
         if (inputText) {
-            const storedData = localStorage.getItem(program.NAME + '_' + settingName + '_input')
+            const storedData = localStorage.getItem(program.STORAGE_NAME + '_' + settingName + '_input')
             inputText.value = storedData || "{Username}__{Year}-{Month}-{Day}--{Hour}-{Minute}"
 
             const saveFilenameFormat = el.querySelector("#saveFilenameFormat")
             saveFilenameFormat.addEventListener("click", (event: { preventDefault: () => void }) => {
                 event.preventDefault()
 
-                const storedData = localStorage.getItem(program.NAME + '_' + settingName + '_input')
+                const storedData = localStorage.getItem(program.STORAGE_NAME + '_' + settingName + '_input')
                 const input = String(inputText.value)
 
                 // Save merged settings to LocalStorage
-                localStorage.setItem(program.NAME + '_' + settingName + '_input', input)
+                localStorage.setItem(program.STORAGE_NAME + '_' + settingName + '_input', input)
 
                 saveFilenameFormat.textContent = localize("index@saved")
                 saveFilenameFormat.style.color = "white"
@@ -105,7 +106,7 @@ async function handleProfilePage() {
         userInfo = await getUserFromInfoApi(userId)
         if (userInfo) {
             let openInNewTab = false
-            const storedSetting3Checkbox = localStorage.getItem(program.NAME + "_setting3_checkbox") || "false"
+            const storedSetting3Checkbox = localStorage.getItem(program.STORAGE_NAME + "_setting3_checkbox") || "false"
             if (storedSetting3Checkbox !== null && storedSetting3Checkbox !== undefined) {
                 openInNewTab = storedSetting3Checkbox === "true"
             }

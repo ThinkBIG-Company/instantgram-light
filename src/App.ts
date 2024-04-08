@@ -2,6 +2,7 @@ import { BrowserInfo, SearchBotDeviceInfo, BotInfo, NodeInfo, ReactNativeInfo } 
 
 export type Program = {
   NAME: string
+  STORAGE_NAME: string
   VERSION: string
 
   browser: BrowserInfo | SearchBotDeviceInfo | BotInfo | NodeInfo | ReactNativeInfo | null
