@@ -34,23 +34,26 @@ const findAppId = () => {
 
 function findPostId(articleNode: HTMLElement) {
     const pathname = window.location.pathname
-    if (pathname.startsWith("/reels/")) {
+    if (pathname.startsWith("/reel/")) {
+        return pathname.split("/")[2]
+    } else if (pathname.startsWith("/reels/")) {
         return pathname.split("/")[2]
     } else if (pathname.startsWith("/stories/")) {
         return pathname.split("/")[3]
     } else if (pathname.startsWith("/reel/")) {
         return pathname.split("/")[2]
-    }
-    const postIdPattern = /^\/p\/([^/]+)\//
-    const aNodes = articleNode.querySelectorAll("a")
-    for (let i = 0; i < aNodes.length; ++i) {
-        const link = aNodes[i].getAttribute("href")
-        if (link) {
-            const match = link.match(postIdPattern)
-            if (match) return match[1]
+    } else {
+        const postIdPattern = /^\/p\/([^/]+)\//
+        const aNodes = articleNode.querySelectorAll("a")
+        for (let i = 0; i < aNodes.length; ++i) {
+            const link = aNodes[i].getAttribute("href")
+            if (link) {
+                const match = link.match(postIdPattern)
+                if (match) return match[1]
+            }
         }
+        return null
     }
-    return null
 }
 
 const findMediaId = async (postId: string) => {
@@ -113,7 +116,7 @@ export async function generateModalBody(el: any, program: Program) {
 
     // Check if is an ad
     const storedSetting1Checkbox = localStorage.getItem(program.STORAGE_NAME + "_setting1_checkbox") || "false"
-    if (storedSetting1Checkbox !== null && storedSetting1Checkbox !== undefined && storedSetting1Checkbox === "false" && mediaInfo.product_type == "ad") {
+    if (storedSetting1Checkbox !== null && storedSetting1Checkbox !== undefined && storedSetting1Checkbox === "false" && el.textContent.includes(localize("ad"))) {
         mediaType = MediaType.Ad
         return { found, mediaType, mediaInfo, modalBody, selectedSliderIndex, userName }
     }
@@ -150,7 +153,7 @@ export async function generateModalBody(el: any, program: Program) {
             dotsList = el.querySelectorAll(`:scope > div > div > div > div:nth-child(2)>div`)
         } else {
             dotsList = el.querySelectorAll(`:scope > div > div:nth-child(2) >div>div>div>div>div> div:nth-child(2)>div`)
-        }        
+        }
 
         selectedSliderIndex = [...dotsList].findIndex((i) => i.classList.length === 2)
 
@@ -296,22 +299,29 @@ export function getElementInViewPercentage(el: Element): any {
 }
 
 export const getMediaFromInfoApi = async (articleNode: HTMLElement): Promise<Array<any> | null> => {
+    if (process.env.DEV) {
+        console.info(["articleNode", articleNode])
+    }
+
     try {
         const appId = findAppId()
         if (!appId) {
             console.log("Cannot find appid")
             return null
         }
+
         const postId = findPostId(articleNode)
         if (!postId) {
             console.log("Cannot find post id")
             return null
         }
+
         const mediaId = await findMediaId(postId)
         if (!mediaId) {
             console.log("Cannot find media id")
             return null
         }
+
         if (!mediaInfoCache.has(mediaId)) {
             const url = "https://i.instagram.com/api/v1/media/" + mediaId + "/info/"
             const resp = await fetch(url, {
@@ -331,6 +341,7 @@ export const getMediaFromInfoApi = async (articleNode: HTMLElement): Promise<Arr
             const respJson = await resp.json()
             mediaInfoCache.set(mediaId, respJson)
         }
+
         const infoJson = mediaInfoCache.get(mediaId)
         return infoJson.items[0]
     } catch (e: any) {

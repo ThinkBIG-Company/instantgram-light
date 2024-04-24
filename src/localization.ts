@@ -26,7 +26,9 @@ export default {
             'modules.update@determineIfGetUpdateIsNecessary_contacting': '[instantgram-light] is looking for available updates...',
             'modules.update@determineIfGetUpdateIsNecessary_updated': '[instantgram-light] updated your current version.',
             'modules.update@determineIfGetUpdateIsNecessary_@update_available': 'There is a new update available',
-            'modules.update@determineIfGetUpdateIsNecessary_@load_update': 'Get update'
+            'modules.update@determineIfGetUpdateIsNecessary_@load_update': 'Get update',
+        
+            'ad': 'Sponsored'
         },
         'es-AR': {
             'helpers.localize_defaultlang': '[instantgram-light] establecer idioma: ${LANG_DEFAULT} \n Para más información sobre los idiomas disponibles, consulte http://thinkbig-company.github.io/instantgram',
@@ -54,7 +56,9 @@ export default {
             'modules.update@determineIfGetUpdateIsNecessary_contacting': '[instantgram-light] está buscando actualizaciones disponibles...',
             'modules.update@determineIfGetUpdateIsNecessary_updated': '[instantgram-light] ha actualizado su versión actual.',
             'modules.update@determineIfGetUpdateIsNecessary_@update_available': 'Hay una nueva actualización disponible',
-            'modules.update@determineIfGetUpdateIsNecessary_@load_update': 'Obtener información'
+            'modules.update@determineIfGetUpdateIsNecessary_@load_update': 'Obtener información',
+
+            'ad': 'Publicidad'
         },
         'de-DE': {
             'helpers.localize_defaultlang': 'Ausgewählte Sprache: ${LANG_DEFAULT} \n Weitere Informationen zu den unterstützten Sprachen findest du auf http://thinkbig-company.github.io/instantgram',
@@ -82,7 +86,9 @@ export default {
             'modules.update@determineIfGetUpdateIsNecessary_contacting': '[instantgram-light] sucht nach neuen verfügbaren Updates...',
             'modules.update@determineIfGetUpdateIsNecessary_updated': '[instantgram-light] wurde aktualisiert.',
             'modules.update@determineIfGetUpdateIsNecessary_@update_available': 'Es ist ein neues Update verfügbar',
-            'modules.update@determineIfGetUpdateIsNecessary_@load_update': 'Update laden'
+            'modules.update@determineIfGetUpdateIsNecessary_@load_update': 'Update laden',
+
+            'ad': 'Anzeige'
         },
         'pt-BR': {
             'helpers.localize_defaultlang': '[instantgram-light] idioma configurado: ${LANG_DEFAULT} \npara mais informações sobre os idiomas suportados, acesse http://thinkbig-company.github.io/instantgram',
@@ -110,7 +116,9 @@ export default {
             'modules.update@determineIfGetUpdateIsNecessary_contacting': '[instantgram-light] está procurando atualizações...',
             'modules.update@determineIfGetUpdateIsNecessary_updated': '[instantgram-light] informações locais atualizadas',
             'modules.update@determineIfGetUpdateIsNecessary_@update_available': 'Há uma nova atualização disponível',
-            'modules.update@determineIfGetUpdateIsNecessary_@load_update': 'Carga de actualização'
+            'modules.update@determineIfGetUpdateIsNecessary_@load_update': 'Carga de actualização',
+
+            'ad': 'Patrocinado'
         }
     }
 }
