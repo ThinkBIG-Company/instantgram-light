@@ -1,4 +1,4 @@
-# <img style="float: left; vertical-align: bottom; " width="35" src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg"> [instantgram-light] v2024.04.09 Star Wars :smiling_face_with_three_hearts:
+# <img style="float: left; vertical-align: bottom; " width="35" src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg"> [instantgram-light] v2024.04.24 Star Wars :smiling_face_with_three_hearts:
 ![GitHub release](https://img.shields.io/badge/release-v2024.04.24-green)
 
 ![badge](https://img.shields.io/badge/for-instagram-yellow.svg?style=flat-square)
