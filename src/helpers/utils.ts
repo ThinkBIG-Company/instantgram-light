@@ -159,6 +159,9 @@ export async function generateModalBodyHelper(el: HTMLElement, mediaInfo, userNa
         noMultiStories: localStorage.getItem(`${program.STORAGE_NAME}_settings_stories_3`) === "true"
     }
 
+    console.log(localStorage.getItem(`${program.STORAGE_NAME}_settings_general_4`));
+    console.log(settings.formattedFilenameInput);
+
     const addMediaToBody = (media, index) => {
         console.log('GOOO')
         let URL: string

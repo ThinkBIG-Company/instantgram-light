@@ -54,7 +54,7 @@ export class MediaScanner implements Module {
         // Handle input text and button
         const inputFileFormat = el.querySelector<HTMLInputElement>('#settings-general-4')
         if (inputFileFormat) {
-            const inputKey = `${program.STORAGE_NAME}_settings_general_3`
+            const inputKey = `${program.STORAGE_NAME}_settings_general_4`
             inputFileFormat.value = localStorage.getItem(inputKey) || "{Username}__{Year}-{Month}-{Day}--{Hour}-{Minute}"
 
             const saveFilenameFormatBtn = el.querySelector<HTMLElement>(`#settings-general-btn-4`)
