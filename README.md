@@ -1,5 +1,5 @@
-# <img style="float: left; vertical-align: bottom; " width="35" src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg"> [instantgram-light] v2024.04.24 Star Wars :smiling_face_with_three_hearts:
-![GitHub release](https://img.shields.io/badge/release-v2024.04.24-green)
+# <img style="float: left; vertical-align: bottom; " width="35" src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg"> [instantgram-light] v2024.06.04 Summer Feeling :sunglasses:
+![GitHub release](https://img.shields.io/badge/release-v2024.06.04-green)
 
 ![badge](https://img.shields.io/badge/for-instagram-yellow.svg?style=flat-square)
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com/)
@@ -36,6 +36,7 @@ This is a lite version which supports browsers like firefox with 65kb bookmarkle
 Read [CONTRIBUTING.md](CONTRIBUTING.md) for more information. :heart:
 
 ## Changelog
+- v2024.06.04 - [instangram-light] Replaced the old, inefficient webpack build system with Rollup. Also, switched from the Babel minimizer to SWC. Removed the Bookmarkletify dependency and updated Metalsmith to the latest version. Completed an efficient rewrite of all modules to reduce the overall size. Redesigned the UI into tabs to clarify some settings and added some new settings.
 - v2024.04.24 - [instangram-light] Fixed, ads not recognized correctly. Shows "Did you open any Instagram post?"
 - v2024.04.09 - [instangram-light] Part 2: More fixing CSP errors and fixing wrong update url on new update dialog; Addressed various issues: first, fixed the stories feature that was not working again; second, removed CSP warnings in the developer console; third, ensured proper cleanup after using instantgram.
 - v2024.04.08 - [instangram-light] Addressed various issues: first, fixed the stories feature that was not working again; second, removed CSP warnings in the developer console; third, ensured proper cleanup after using instantgram.

@@ -1,5 +1,6 @@
 import { Program } from "../App"
 import { Module } from "./Module"
+import { MediaScanResult } from "../model/MediaScanResult"
 import { getElementInViewPercentage, generateModalBody } from "../helpers/utils"
 
 export class ReelsScanner implements Module {
@@ -7,78 +8,46 @@ export class ReelsScanner implements Module {
         return "ReelsScanner"
     }
 
-    public getPostId(): string {
-        const url = window.location.href
-        const regex = /\/p\/([a-zA-Z0-9_-]+)/
-        const postId = url.match(regex)?.[1]
-
-        return postId
+    /** Fetches relevant articles from the DOM */
+    private getRelevantArticles(): HTMLElement[] {
+        const articles = document.querySelectorAll("section > main > div > div")
+        // Cast each Element to HTMLElement
+        return Array.from(articles).filter(article => article.children.length > 0) as HTMLElement[]
     }
 
-    /** @suppress {uselessCode} */
-    public async execute(program: Program, callback?: any): Promise<any> {
-        /* =====================================
-         =        ReelsScanner                 =
-         ==================================== */
-        try {
-            // Define default variables
-            let modalBody = ""
-
-            // All grabed feed posts
-            let $articles: any
-
-            // Article
-            let $article: any
-
-            // Scanner begins
-            $articles = document.querySelectorAll('section > main > div > div')
-            $articles = Array.from($articles).filter(function (element) {
-                return (<any>element).children.length > 0
-            })
-
-            let mediaElInfos: any[] = []
-            // Find needed post
-            for (let i1 = 0; i1 < $articles.length; i1++) {
-                let mediaEl = $articles[i1]
-
-                if (mediaEl != null && typeof mediaEl.getBoundingClientRect() != null) {
-                    let elemVisiblePercentage = getElementInViewPercentage(mediaEl)
-                    mediaElInfos.push({ i1, mediaEl, elemVisiblePercentage })
-                } else {
-                    mediaElInfos.push({ i1, mediaEl, elemVisiblePercentage: 0 })
-                }
-            }
-
-            let objMax = mediaElInfos.reduce((max, current) => max.elemVisiblePercentage > current.elemVisiblePercentage ? max : current)
-            $article = $articles[objMax.i1]
-
-            if (typeof $article !== 'undefined' || $article !== null || $article !== '') {
-                let v = await generateModalBody($article, program)
-                modalBody += v.modalBody
-
-                program.foundMediaObj = {
-                    found: v.found,
-                    mediaType: v.mediaType,
-                    mediaInfo: v.mediaInfo,
-                    modalBody: modalBody,
-                    selectedSliderIndex: v.selectedSliderIndex,
-                    userName: v.userName
-                }
-            }
-
-            callback(program)
-        } catch (e) {
-            console.error(this.getName() + "()", `[${program.NAME}] ${program.VERSION}`, e)
-            program.foundMediaObj = {
-                found: false,
-                mediaType: undefined,
-                mediaInfo: undefined,
-                modalBody: undefined,
-                selectedSliderIndex: undefined,
-                userName: undefined
-            }
-            callback(program)
+    /** Determines the most relevant article based on visibility */
+    private findMostRelevantArticle(articles: HTMLElement[]): HTMLElement | null {
+        if (articles.length === 0) {
+            return null // Immediately return null if no articles are provided
         }
-        /* =====  End of ReelsScanner ======*/
+
+        const mediaElementInfos = articles.map((article, index) => ({
+            index,
+            article,
+            visibility: getElementInViewPercentage(article) // This function should accept HTMLElement
+        }))
+
+        const mostVisible = mediaElementInfos.reduce((max, current) => (
+            max.visibility > current.visibility ? max : current
+        ), { index: -1, visibility: 0 }) // Initialize with -1 to handle empty array gracefully
+
+        return mostVisible.visibility > 0 ? articles[mostVisible.index] : null
+    }
+
+    /** Main execution method for scanning Reels */
+    public async execute(program: Program): Promise<MediaScanResult | null> {
+        try {
+            const articles = this.getRelevantArticles()
+            const mostRelevantArticle = this.findMostRelevantArticle(articles)
+            if (!mostRelevantArticle) {
+                return { found: false, errorMessage: 'No target found.' }
+            }
+
+            const modalData = await generateModalBody(mostRelevantArticle, program)
+            return modalData
+        } catch (e) {
+            console.error(`[${program.NAME}] ${program.VERSION}`, this.getName() + "()", e)
+            return { found: false, errorMessage: e.message, error: e }
+        }
     }
 }
