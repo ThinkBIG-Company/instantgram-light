@@ -154,7 +154,7 @@ export async function generateModalBodyHelper(el: HTMLElement, mediaInfo, userNa
         noMultiStories: localStorage.getItem(`${program.STORAGE_NAME}_settings_stories_3`) === "true"
     }
 
-    const addMediaToBody = (media, index) => {
+    const addMediaToBody = (media: { width: any; height: any; url: string }, index: number) => {
         let URL: string
         let FORMATTED_FILENAME: string
         if (media && media.width && media.height && media.url) {
@@ -167,6 +167,7 @@ export async function generateModalBodyHelper(el: HTMLElement, mediaInfo, userNa
         }
 
         const mediaType = resolveElementMediaType(media)
+        console.log(mediaType)
         const mediaElement = getMediaElement(mediaType, URL, settings.mutedStories)
 
         const encodedUrl = `https://instantgram.1337.pictures/download.php?data=${btoa(URL)}:${btoa(FORMATTED_FILENAME)}`
@@ -379,13 +380,12 @@ export function resolveCurrentSliderIndex(el: HTMLElement): number {
 //     }
 //     return -1 // Return -1 if no such div is found
 // }
-export function resolveElementMediaType(mediaArray) {
+export function resolveElementMediaType(mediaArray: { width?: any; height?: any; url?: string; carousel_media?: any; video_dash_manifest?: any; video_duration?: any; video_versions?: any }) {
     if (mediaArray.carousel_media !== undefined) {
         return MediaType.Carousel
-    } else if (mediaArray.video_dash_manifest !== undefined) {
+    } else if (mediaArray.video_dash_manifest !== undefined || mediaArray.video_duration !== undefined || mediaArray.video_versions !== undefined) {
         return MediaType.Video
-    }
-    else {
+    } else {
         return MediaType.Image
     }
 }
