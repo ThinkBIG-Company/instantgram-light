@@ -167,7 +167,6 @@ export async function generateModalBodyHelper(el: HTMLElement, mediaInfo, userNa
         }
 
         const mediaType = resolveElementMediaType(media)
-        console.log(mediaType)
         const mediaElement = getMediaElement(mediaType, URL, settings.mutedStories)
 
         const encodedUrl = `https://instantgram.1337.pictures/download.php?data=${btoa(URL)}:${btoa(FORMATTED_FILENAME)}`
