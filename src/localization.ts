@@ -1,7 +1,7 @@
 export default {
     "langs": {
         "en-US": {
-            "helpers.localize_defaultlang": "[instantgram-light] set language: ${LANG_DEFAULT} \n For more information about available languages please check http://thinkbig-company.github.io/instantgram",
+            "helpers.localize_defaultlang": "[instantgram-light] set language: ${LANG_DEFAULT} \n For more information about available languages please check http://thinkbig-company.github.io/instantgram-light",
 
             "index@alert_onlyWorks": "Works only on instagram.com",
             "index@profilepage_downloader_disabled": "Sorry the ProfilePage downloader is currently disabled because instagram changed their system.\n\nMaybe in the future there will be a solution to fix the problem.",
@@ -31,7 +31,7 @@ export default {
             "index@saved": "Saved",
             "index@close": "Close",
 
-            "modules.update@consoleWarnOutdatedInfo": "[instantgram-light] is outdated. Please check http://thinkbig-company.github.io/instantgram for available updates.",
+            "modules.update@consoleWarnOutdatedInfo": "[instantgram-light] is outdated. Please check http://thinkbig-company.github.io/instantgram-light for available updates.",
             "modules.update@consoleWarnOutdatedInfoVersions": "[instantgram-light] Installed version: ${data.version} | New update: ${data.onlineVersion}",
             "modules.update@determineIfGetUpdateIsNecessary_contacting": "[instantgram-light] is looking for available updates...",
             "modules.update@determineIfGetUpdateIsNecessary_updated": "[instantgram-light] updated your current version.",
@@ -41,7 +41,7 @@ export default {
             "ad": "Sponsored"
         },
         "de-DE": {
-            "helpers.localize_defaultlang": "Ausgewählte Sprache: ${LANG_DEFAULT} \n Weitere Informationen zu den unterstützten Sprachen findest du auf http://thinkbig-company.github.io/instantgram",
+            "helpers.localize_defaultlang": "Ausgewählte Sprache: ${LANG_DEFAULT} \n Weitere Informationen zu den unterstützten Sprachen findest du auf http://thinkbig-company.github.io/instantgram-light",
 
             "index@alert_onlyWorks": "Funktioniert nur auf instagram.com",
             "index@profilepage_downloader_disabled": "Leider ist der ProfilePage-Downloader derzeit deaktiviert, da Instagram sein System geändert hat.\n\nVielleicht gibt es in Zukunft eine Lösung für dieses Problem.",
@@ -71,7 +71,7 @@ export default {
             "index@saved": "Gespeichert",
             "index@close": "Schließen",
 
-            "modules.update@consoleWarnOutdatedInfo": "[instantgram-light] ist veraltet. Bitte besuche die Seite http://thinkbig-company.github.io/instantgram für ein Update.",
+            "modules.update@consoleWarnOutdatedInfo": "[instantgram-light] ist veraltet. Bitte besuche die Seite http://thinkbig-company.github.io/instantgram-light für ein Update.",
             "modules.update@consoleWarnOutdatedInfoVersions": "[instantgram-light] Installierte Version: ${data.version} | Neue Version: ${data.onlineVersion}",
             "modules.update@determineIfGetUpdateIsNecessary_contacting": "[instantgram-light] sucht nach neuen verfügbaren Updates...",
             "modules.update@determineIfGetUpdateIsNecessary_updated": "[instantgram-light] wurde aktualisiert.",
@@ -81,7 +81,7 @@ export default {
             "ad": "Anzeige"
         },
         "es-AR": {
-            "helpers.localize_defaultlang": "[instantgram-light] establecer idioma: ${LANG_DEFAULT} \n Para más información sobre los idiomas disponibles, consulte http://thinkbig-company.github.io/instantgram",
+            "helpers.localize_defaultlang": "[instantgram-light] establecer idioma: ${LANG_DEFAULT} \n Para más información sobre los idiomas disponibles, consulte http://thinkbig-company.github.io/instantgram-light",
 
             "index@alert_onlyWorks": "Sólo funciona en instagram.com",
             "index@profilepage_downloader_disabled": "Lo siento, la descarga de ProfilePage está deshabilitada actualmente porque Instagram cambió su sistema.\n\nTal vez en el futuro haya una solución para solucionar el problema.",
@@ -111,7 +111,7 @@ export default {
             "index@saved": "Salvado",
             "index@close": "Cerca",
 
-            "modules.update@consoleWarnOutdatedInfo": "[instantgram-light] es obsoleto. Consulte en http://thinkbig-company.github.io/instantgram las actualizaciones disponibles.",
+            "modules.update@consoleWarnOutdatedInfo": "[instantgram-light] es obsoleto. Consulte en http://thinkbig-company.github.io/instantgram-light las actualizaciones disponibles.",
             "modules.update@consoleWarnOutdatedInfoVersions": "[instantgram-light] Versión instalada: ${data.version} | Nueva actualización: ${data.onlineVersion}",
             "modules.update@determineIfGetUpdateIsNecessary_contacting": "[instantgram-light] está buscando actualizaciones disponibles...",
             "modules.update@determineIfGetUpdateIsNecessary_updated": "[instantgram-light] ha actualizado su versión actual.",
@@ -121,7 +121,7 @@ export default {
             "ad": "Publicidad"
         },
         "pt-BR": {
-            "helpers.localize_defaultlang": "[instantgram-light] idioma configurado: ${LANG_DEFAULT} \npara mais informações sobre os idiomas suportados, acesse http://thinkbig-company.github.io/instantgram",
+            "helpers.localize_defaultlang": "[instantgram-light] idioma configurado: ${LANG_DEFAULT} \npara mais informações sobre os idiomas suportados, acesse http://thinkbig-company.github.io/instantgram-light",
 
             "index@alert_onlyWorks": "[instantgram-light] somente funciona no instagram.com",
             "index@profilepage_downloader_disabled": "Lamentamos que o programa de download ProfilePage esteja atualmente desativado porque o programa mudou seu sistema.\n\nTalvez, no futuro, haja uma solução para resolver o problema.",
@@ -151,7 +151,7 @@ export default {
             "index@saved": "Salvo em",
             "index@close": "Fechar",
 
-            "modules.update@consoleWarnOutdatedInfo": "[instantgram-light] está desatualizado. Acesse http://thinkbig-company.github.io/instantgram para atualizar",
+            "modules.update@consoleWarnOutdatedInfo": "[instantgram-light] está desatualizado. Acesse http://thinkbig-company.github.io/instantgram-light para atualizar",
             "modules.update@consoleWarnOutdatedInfoVersions": "[instantgram-light] versão local: ${data.version} | nova versão: ${data.onlineVersion}",
             "modules.update@determineIfGetUpdateIsNecessary_contacting": "[instantgram-light] está procurando atualizações...",
             "modules.update@determineIfGetUpdateIsNecessary_updated": "[instantgram-light] informações locais atualizadas",
