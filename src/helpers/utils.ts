@@ -169,7 +169,7 @@ export async function generateModalBodyHelper(el: HTMLElement, mediaInfo, userNa
         const mediaType = resolveElementMediaType(media)
         const mediaElement = getMediaElement(mediaType, URL, settings.mutedStories)
 
-        const encodedUrl = `https://instantgram.1337.pictures/download.php?data=${btoa(URL)}:${btoa(FORMATTED_FILENAME)}`
+        const encodedUrl = `https://instantgram-light.1337.pictures/download.php?data=${btoa(URL)}:${btoa(FORMATTED_FILENAME)}`
         const downloadUrl = settings.openInNewTab ? URL : encodedUrl
 
         modalBody += `<div class="slide">${mediaElement}<a href="${downloadUrl}" style="width:inherit;font-size:20px;font-weight:600;margin-top:-4px;" ${settings.openInNewTab ? 'target="_blank" rel="noopener noreferrer"' : ''} class="${program.NAME}-modal-db">${localize("index@download")}</a></div>`

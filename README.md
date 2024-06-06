@@ -36,6 +36,7 @@ This is a lite version which supports browsers like firefox with 65kb bookmarkle
 Read [CONTRIBUTING.md](CONTRIBUTING.md) for more information. :heart:
 
 ## Changelog
+- v2024.06.06 - [instangram-light] Replaced the old, inefficient webpack build system with Rollup. Also, switched from the Babel minimizer to SWC. Removed the Bookmarkletify dependency and updated Metalsmith to the latest version. Completed an efficient rewrite of all modules to reduce the overall size. Redesigned the UI into tabs to clarify some settings and added some new settings. Fixed some videos are treated as images. And many more cosmetic fixes...
 - v2024.06.05 - [instangram-light] Replaced the old, inefficient webpack build system with Rollup. Also, switched from the Babel minimizer to SWC. Removed the Bookmarkletify dependency and updated Metalsmith to the latest version. Completed an efficient rewrite of all modules to reduce the overall size. Redesigned the UI into tabs to clarify some settings and added some new settings. Fixed some videos are treated as images.
 - v2024.06.04 - [instangram-light] Replaced the old, inefficient webpack build system with Rollup. Also, switched from the Babel minimizer to SWC. Removed the Bookmarkletify dependency and updated Metalsmith to the latest version. Completed an efficient rewrite of all modules to reduce the overall size. Redesigned the UI into tabs to clarify some settings and added some new settings.
 - v2024.04.24 - [instangram-light] Fixed, ads not recognized correctly. Shows "Did you open any Instagram post?"
