@@ -1,5 +1,5 @@
-# <img style="float: left; vertical-align: bottom; " width="35" src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg"> [instantgram-light] v2024.06.11 Summer Feeling :sunglasses:
-![GitHub release](https://img.shields.io/badge/release-v2024.06.11-green)
+# <img style="float: left; vertical-align: bottom; " width="35" src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg"> [instantgram-light] v2024.09.03 Beginning of Fall 🍂
+![GitHub release](https://img.shields.io/badge/release-v2024.09.03-green)
 
 ![badge](https://img.shields.io/badge/for-instagram-yellow.svg?style=flat-square)
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com/)
@@ -36,6 +36,7 @@ This is a lite version which supports browsers like firefox with 65kb bookmarkle
 Read [CONTRIBUTING.md](CONTRIBUTING.md) for more information. :heart:
 
 ## Changelog
+- v2024.09.03 - [instangram-light] New refreshed colors, many rewrites and fixes. Oh yes, this means all open issues have been fixed except for ads parsing. Thanks to all supportes made this possible. 
 - v2024.06.11 - [instangram-light] Fixed github pages bug, fixed current slider number often not correct detected...
 - v2024.06.06 - [instangram-light] Replaced the old, inefficient webpack build system with Rollup. Also, switched from the Babel minimizer to SWC. Removed the Bookmarkletify dependency and updated Metalsmith to the latest version. Completed an efficient rewrite of all modules to reduce the overall size. Redesigned the UI into tabs to clarify some settings and added some new settings. Fixed some videos are treated as images. And many more cosmetic fixes...
 - v2024.06.05 - [instangram-light] Replaced the old, inefficient webpack build system with Rollup. Also, switched from the Babel minimizer to SWC. Removed the Bookmarkletify dependency and updated Metalsmith to the latest version. Completed an efficient rewrite of all modules to reduce the overall size. Redesigned the UI into tabs to clarify some settings and added some new settings. Fixed some videos are treated as images.
